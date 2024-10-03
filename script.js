@@ -89,30 +89,46 @@ function handleScrollAnimation() {
 
 // DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation
-    const navToggle = document.querySelector('.nav-toggle');
-    const nav = document.querySelector('nav');
-    const overlay = document.querySelector('.overlay');
+    // Standard Navigation Enhancement
+    const navLinks = document.querySelectorAll('nav ul li a');
 
-    if (navToggle) {
-        navToggle.addEventListener('click', function() {
-            const isExpanded = nav.classList.contains('active');
-            nav.classList.toggle('active');
-            overlay.classList.toggle('active');
-            navToggle.setAttribute('aria-expanded', !isExpanded);
-            // Change the icon to 'X' when menu is open
-            this.innerHTML = isExpanded ? '☰' : '✕';
+    navLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transition = 'color 0.3s ease, transform 0.3s ease';
+            this.style.transform = 'translateY(-2px)';
         });
-    }
 
-    if (overlay) {
-        overlay.addEventListener('click', function() {
-            nav.classList.remove('active');
-            overlay.classList.remove('active');
-            navToggle.setAttribute('aria-expanded', 'false');
-            navToggle.innerHTML = '☰';
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
         });
-    }
+
+        // Add aria-current attribute to the current page link
+        if (link.href === window.location.href) {
+            link.setAttribute('aria-current', 'page');
+            link.style.borderBottom = '2px solid var(--accent-color)';
+        }
+    });
+
+    // Highlight the section in view
+    const sections = document.querySelectorAll('.section');
+    window.addEventListener('scroll', debounce(function() {
+        let currentSection = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - sectionHeight / 3) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === currentSection) {
+                link.classList.add('active');
+            }
+        });
+    }));
+
 
     // Form submission handling
     const contactForm = document.querySelector('.contact-form');
