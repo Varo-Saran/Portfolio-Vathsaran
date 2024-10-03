@@ -23,47 +23,54 @@ body, html {
 
 header {
     background: rgba(0, 0, 0, 0.7);
-    padding: 1rem 0;
     position: fixed;
     width: 100%;
+    top: 0;
+    left: 0;
     z-index: 1000;
 }
 
 nav {
-    padding: 1rem 0;
+    padding: 0.5rem 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
 }
 
 nav ul {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
     padding: 0;
+    margin: 0;
     list-style: none;
 }
 
 nav ul li {
-    margin: 0;
+    margin: 0 10px;
 }
 
 nav ul li a {
     color: var(--text-color);
     text-decoration: none;
-    font-size: 1.1em;
-    transition: color 0.3s ease, transform 0.3s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    padding: 0.5rem 0;
+    display: inline-block;
 }
 
 nav ul li a:hover,
 nav ul li a:focus,
 nav ul li a.active {
     color: var(--accent-color);
-    background-color: rgba(255, 255, 255, 0.1);
 }
 
 nav ul li a[aria-current="page"] {
     border-bottom: 2px solid var(--accent-color);
+}
+
+/* Adjust main content to account for fixed header */
+main {
+    padding-top: 60px; /* Adjust this value based on your header height */
 }
 
 
