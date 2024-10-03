@@ -38,7 +38,7 @@ nav {
     align-items: center;
     padding: 0.5rem 5%;
     position: relative;
-    height: 55px;
+    height: 60px;
 }
 
 .logo {
@@ -53,6 +53,9 @@ nav {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .nav-links li {
@@ -106,6 +109,108 @@ nav {
 
 .nav-links a.active::after {
     animation: glow 2s infinite;
+}
+
+.search-container {
+    position: relative;
+}
+
+.search-input {
+    background-color: rgba(0, 191, 255, 0.1);
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 8px 15px;
+    width: 200px;
+    color: var(--text-color);
+    font-family: 'Orbitron', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 15px var(--accent-color);
+    width: 250px;
+}
+
+.search-input::placeholder {
+    color: rgba(224, 247, 255, 0.5);
+}
+
+.search-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 8px;
+    transition: color 0.3s ease;
+}
+
+.search-btn:hover {
+    color: var(--accent-color);
+}
+
+.search-btn i {
+    font-size: 1.2rem;
+}
+
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--background-color);
+    border: 1px solid var(--primary-color);
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+}
+
+.search-suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-suggestions li:hover {
+    background-color: rgba(0, 191, 255, 0.1);
+}
+
+.search-suggestions .suggestion {
+    font-weight: bold;
+}
+
+.search-suggestions .search-results-header {
+    font-weight: bold;
+    color: var(--primary-color);
+    border-top: 1px solid var(--primary-color);
+}
+
+.search-suggestions .search-result {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+}
+
+.search-suggestions .search-result a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.search-suggestions .search-result p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+    color: var(--text-color);
+}
+
+.search-suggestions .no-results {
+    color: var(--text-color);
+    font-style: italic;
 }
 
 /* Adjust main content to account for fixed header */
