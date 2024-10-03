@@ -29,20 +29,8 @@
 
 /* Large phones and small tablets */
 @media screen and (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
+    
 
-    nav ul li {
-        width: 100%;
-        text-align: center;
-    }
-
-    nav ul li a {
-        display: block;
-        padding: 1rem;
-    }
 
     body, html {
         font-size: 14px;
