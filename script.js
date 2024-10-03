@@ -1,3 +1,82 @@
+const pages = ['index.html', 'about.html', 'skills.html', 'projects.html', 'contact.html'];
+
+async function showSuggestionsAndResults(searchTerm) {
+    const searchSuggestions = document.querySelector('.search-suggestions');
+    const allTerms = ['about', 'skills', 'projects', 'contact', 'portfolio', 'data analytics', 'graphic design', 'vathsaran', 'yasotharan'];
+    const suggestions = allTerms.filter(term => term.includes(searchTerm.toLowerCase()));
+
+    let content = '';
+
+    if (suggestions.length > 0 && searchTerm.length > 0) {
+        content += suggestions.map(s => `<li class="suggestion">${s}</li>`).join('');
+    }
+
+    if (searchTerm.length > 0) {
+        const results = await performSearch(searchTerm);
+        if (results.length > 0) {
+            content += '<li class="search-results-header">Search Results:</li>';
+            content += results.map(result => `
+                <li class="search-result">
+                    <a href="${result.page}#${result.anchor}">${result.title}</a>
+                    <p>${result.snippet}</p>
+                </li>
+            `).join('');
+        } else {
+            content += '<li class="no-results">No results found.</li>';
+        }
+    }
+
+    if (content) {
+        searchSuggestions.innerHTML = content;
+        searchSuggestions.style.display = 'block';
+    } else {
+        searchSuggestions.style.display = 'none';
+    }
+}
+
+async function performSearch(searchTerm) {
+    console.log('Performing search for:', searchTerm);
+    const results = [];
+
+    for (const page of pages) {
+        try {
+            const response = await fetch(page);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            const mainContent = doc.querySelector('main') || doc.querySelector('[role="main"]');
+            if (mainContent) {
+                const sections = mainContent.querySelectorAll('.section');
+                sections.forEach((section, index) => {
+                    const sectionTitle = section.querySelector('h2');
+                    const sectionContent = section.textContent;
+                    if (sectionContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        const title = sectionTitle ? sectionTitle.textContent : 'Section';
+                        const snippet = getSnippet(sectionContent, searchTerm);
+                        const anchor = sectionTitle ? sectionTitle.id : `section-${index}`;
+                        results.push({ page, title, snippet, anchor });
+                    }
+                });
+            }
+        } catch (error) {
+            console.error(`Error searching ${page}:`, error);
+        }
+    }
+
+    return results;
+}
+
+function getSnippet(text, searchTerm, snippetLength = 150) {
+    const lowerText = text.toLowerCase();
+    const index = lowerText.indexOf(searchTerm.toLowerCase());
+    if (index === -1) return '';
+    
+    const start = Math.max(0, index - snippetLength / 2);
+    const end = Math.min(text.length, index + searchTerm.length + snippetLength / 2);
+    return text.slice(start, end).trim() + '...';
+}
+
 // Particle.js configuration
 particlesJS('particles-js', {
     particles: {
@@ -89,31 +168,108 @@ function handleScrollAnimation() {
 
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const navLinkItems = document.querySelectorAll('.nav-links a');
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    const searchSuggestions = document.querySelector('.search-suggestions');
+
+    if (searchInput && searchBtn) {
+        let debounceTimer;
+
+        searchInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                showSuggestionsAndResults(searchInput.value);
+            }, 300);
+        });
     
-    function setActiveLink() {
-        const currentPage = window.location.pathname.split("/").pop() || 'index.html';
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPage) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
+        searchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSuggestionsAndResults(searchInput.value);
+        });
+    
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                showSuggestionsAndResults(searchInput.value);
             }
         });
-    }
     
-    // Set initial active link
-    setActiveLink();
-    
-    // Add click event listeners to each nav link
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            navLinks.forEach(item => item.classList.remove('active'));
-            e.target.classList.add('active');
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                searchSuggestions.style.display = 'none';
+            }
         });
+
+        console.log('Search event listeners attached');
+    } else {
+        console.error('Search input or button not found');
+    }
+
+    // Search functionality
+    let debounceTimer;
+    searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            performSearch();
+        }, 300); // Wait for 300ms after the user stops typing
+    });
+
+    // Add a subtle glow effect to the search input on focus
+    searchInput.addEventListener('focus', () => {
+        searchInput.style.boxShadow = `0 0 10px var(--accent-color)`;
+    });
+
+    searchInput.addEventListener('blur', () => {
+        searchInput.style.boxShadow = 'none';
+    });
+
+    searchBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent form submission if it's in a form
+        performSearch();
     });
 
 
+    // Mobile menu toggle with smooth transition
+    mobileMenuToggle.addEventListener('click', () => {
+        mobileMenuToggle.classList.toggle('active');
+        navLinks.style.transition = 'transform 0.3s ease-in-out';
+        if (navLinks.classList.contains('active')) {
+            navLinks.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                navLinks.classList.remove('active');
+                navLinks.style.transform = '';
+            }, 300);
+        } else {
+            navLinks.classList.add('active');
+            navLinks.style.transform = 'translateX(0)';
+        }
+    });
+
+    // Close mobile menu when a link is clicked
+    navLinkItems.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (event) => {
+        const isClickInsideNav = navLinks.contains(event.target);
+        const isClickOnToggle = mobileMenuToggle.contains(event.target);
+        
+        if (!isClickInsideNav && !isClickOnToggle && navLinks.classList.contains('active')) {
+            mobileMenuToggle.classList.remove('active');
+            navLinks.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                navLinks.classList.remove('active');
+                navLinks.style.transform = '';
+            }, 300);
+        }
+    });
 
 
     // Form submission handling
