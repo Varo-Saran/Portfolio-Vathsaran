@@ -87,60 +87,34 @@ function handleScrollAnimation() {
     });
 }
 
-// DOM Content Loaded Event
-document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.querySelectorAll('nav ul li a');
-
-    // Set active class and aria-current for the current page
-    navLinks.forEach(link => {
-        if (link.href === window.location.href) {
-            link.classList.add('active');
-            link.setAttribute('aria-current', 'page');
-        }
-    });
-
-    // Smooth scroll for navigation links
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            
-            // Check if the link is to a section on the current page
-            if (targetId.startsWith('#') || (targetId.includes('#') && targetId.split('#')[0] === window.location.pathname)) {
-                e.preventDefault();
-                const targetSection = document.querySelector(targetId);
-                if (targetSection) {
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 60, // Adjust for header height
-                        behavior: 'smooth'
-                    });
-                }
-            }
-            
-            // Update active class
-            navLinks.forEach(link => link.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
-    // Highlight the section in view
-    const sections = document.querySelectorAll('.section');
-    window.addEventListener('scroll', debounce(function() {
-        let currentSection = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 60; // Adjust for header height
-            const sectionHeight = section.clientHeight;
-            if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
-                currentSection = section.getAttribute('id');
-            }
-        });
-
+// Wait for the DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    function setActiveLink() {
+        const currentPage = window.location.pathname.split("/").pop() || 'index.html';
         navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(currentSection)) {
+            if (link.getAttribute('href') === currentPage) {
                 link.classList.add('active');
+            } else {
+                link.classList.remove('active');
             }
         });
-    }, 100));
+    }
+    
+    // Set initial active link
+    setActiveLink();
+    
+    // Add click event listeners to each nav link
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            navLinks.forEach(item => item.classList.remove('active'));
+            e.target.classList.add('active');
+        });
+    });
+
+
+
 
     // Form submission handling
     const contactForm = document.querySelector('.contact-form');
