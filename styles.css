@@ -21,51 +21,91 @@ body, html {
     overflow: hidden;
 }
 
+/* Futuristic Navigation Styles */
 header {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 8, 20, 0.95);
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
+    border-bottom: 1px solid var(--primary-color);
 }
 
 nav {
-    padding: 0.5rem 0;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-}
-
-nav ul {
     display: flex;
-    justify-content: center;
-    padding: 0;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 5%;
+    position: relative;
+    height: 55px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.nav-links {
+    display: flex;
+    list-style-type: none;
     margin: 0;
-    list-style: none;
+    padding: 0;
 }
 
-nav ul li {
-    margin: 0 10px;
+.nav-links li {
+    margin: 0 1rem;
 }
 
-nav ul li a {
+.nav-links a {
     color: var(--text-color);
     text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+    font-size: 1.1rem;
     padding: 0.5rem 0;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    position: relative;
     display: inline-block;
 }
 
-nav ul li a:hover,
-nav ul li a:focus,
-nav ul li a.active {
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus,
+.nav-links a.active {
     color: var(--accent-color);
 }
 
-nav ul li a[aria-current="page"] {
-    border-bottom: 2px solid var(--accent-color);
+.nav-links a:hover::after,
+.nav-links a:focus::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px var(--accent-color);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--accent-color);
+    }
+    100% {
+        box-shadow: 0 0 5px var(--accent-color);
+    }
+}
+
+.nav-links a.active::after {
+    animation: glow 2s infinite;
 }
 
 /* Adjust main content to account for fixed header */
