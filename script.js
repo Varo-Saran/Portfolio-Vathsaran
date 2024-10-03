@@ -89,24 +89,37 @@ function handleScrollAnimation() {
 
 // DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function() {
-    // Standard Navigation Enhancement
     const navLinks = document.querySelectorAll('nav ul li a');
 
+    // Set active class and aria-current for the current page
     navLinks.forEach(link => {
-        link.addEventListener('mouseenter', function() {
-            this.style.transition = 'color 0.3s ease, transform 0.3s ease';
-            this.style.transform = 'translateY(-2px)';
-        });
-
-        link.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-
-        // Add aria-current attribute to the current page link
         if (link.href === window.location.href) {
+            link.classList.add('active');
             link.setAttribute('aria-current', 'page');
-            link.style.borderBottom = '2px solid var(--accent-color)';
         }
+    });
+
+    // Smooth scroll for navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            
+            // Check if the link is to a section on the current page
+            if (targetId.startsWith('#') || (targetId.includes('#') && targetId.split('#')[0] === window.location.pathname)) {
+                e.preventDefault();
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 60, // Adjust for header height
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            
+            // Update active class
+            navLinks.forEach(link => link.classList.remove('active'));
+            this.classList.add('active');
+        });
     });
 
     // Highlight the section in view
@@ -114,21 +127,20 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', debounce(function() {
         let currentSection = '';
         sections.forEach(section => {
-            const sectionTop = section.offsetTop;
+            const sectionTop = section.offsetTop - 60; // Adjust for header height
             const sectionHeight = section.clientHeight;
-            if (pageYOffset >= sectionTop - sectionHeight / 3) {
+            if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
                 currentSection = section.getAttribute('id');
             }
         });
 
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href').substring(1) === currentSection) {
+            if (link.getAttribute('href').includes(currentSection)) {
                 link.classList.add('active');
             }
         });
-    }));
-
+    }, 100));
 
     // Form submission handling
     const contactForm = document.querySelector('.contact-form');
