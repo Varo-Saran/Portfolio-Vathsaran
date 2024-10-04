@@ -224,7 +224,7 @@ nav {
 }
 
 .search-suggestions .search-result a {
-    color: var(--accent-color);
+    color: var(--secondary-color);
     text-decoration: none;
     font-weight: bold;
 }
@@ -238,6 +238,13 @@ nav {
 .search-suggestions .no-results {
     color: var(--text-color);
     font-style: italic;
+}
+
+.search-result mark {
+    background-color: rgba(77, 195, 255, 0.3);
+    color: var(--text-color);
+    padding: 0 2px;
+    border-radius: 2px;
 }
 
 /* Adjust main content to account for fixed header */
