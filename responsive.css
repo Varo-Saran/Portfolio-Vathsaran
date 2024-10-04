@@ -157,11 +157,12 @@
         background-color: rgba(0, 8, 20, 0.95);
         padding: 20px;
         border-bottom-left-radius: 10px;
-        box-shadow: -5px 5px 10px rgba(0, 191, 255, 0.1);
+        box-shadow: -5px 5px 10px rgba(0, 191, 255, 0.3);
         z-index: 1000;
         overflow-y: auto; /* Allow scrolling if content is too long */
+        transition: all 0.3s ease-in-out;
+        border: 1px solid var(--primary-color);
     }
-
 
     .nav-links.active {
         display: flex;
@@ -173,18 +174,20 @@
     }
 
     .nav-links a {
-        font-family: 'Arial', sans-serif; /* Change to a cleaner font */
+        font-family: 'Orbitron', sans-serif; /* Keeping the futuristic font */
         font-size: 1.1rem;
         padding: 10px 15px;
         display: block;
         transition: color 0.3s ease, transform 0.3s ease;
-        text-transform: uppercase; /* Optional: make text uppercase */
-        letter-spacing: 1px; /* Optional: add letter spacing */
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--primary-color);
     }
 
     .nav-links a:hover {
         color: var(--accent-color);
         transform: translateX(-5px);
+        text-shadow: 0 0 5px var(--accent-color);
     }
 
     .mobile-menu-toggle {
@@ -210,6 +213,7 @@
         transition: all 0.3s linear;
         position: relative;
         transform-origin: 1px;
+        border-radius: 3px;
     }
 
     .mobile-menu-toggle.active span:nth-child(1) {
@@ -223,6 +227,11 @@
 
     .mobile-menu-toggle.active span:nth-child(3) {
         transform: rotate(-45deg);
+    }
+
+    .mobile-menu-toggle:hover span {
+        background: var(--primary-color);
+        box-shadow: 0 0 5px var(--primary-color);
     }
     
 
