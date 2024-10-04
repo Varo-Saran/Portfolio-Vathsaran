@@ -384,11 +384,20 @@ footer {
 }
 
 /*About Page*/
+body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
 .timeline {
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 20px;
 }
+
 .timeline::after {
     content: '';
     position: absolute;
@@ -398,13 +407,17 @@ footer {
     bottom: 0;
     left: 50%;
     margin-left: -3px;
+    box-shadow: 0 0 10px var(--primary-color);
 }
+
 .timeline-item {
     padding: 10px 40px;
     position: relative;
     background-color: inherit;
-    width: 50%;
+    width: calc(50% - 40px);
+    box-sizing: border-box;
 }
+
 .timeline-item::after {
     content: '';
     position: absolute;
@@ -416,13 +429,17 @@ footer {
     top: 15px;
     border-radius: 50%;
     z-index: 1;
+    box-shadow: 0 0 10px var(--accent-color);
 }
+
 .left {
     left: 0;
 }
+
 .right {
     left: 50%;
 }
+
 .left::before {
     content: " ";
     height: 0;
@@ -435,6 +452,7 @@ footer {
     border-width: 10px 0 10px 10px;
     border-color: transparent transparent transparent var(--primary-color);
 }
+
 .right::before {
     content: " ";
     height: 0;
@@ -447,14 +465,57 @@ footer {
     border-width: 10px 10px 10px 0;
     border-color: transparent var(--primary-color) transparent transparent;
 }
+
 .right::after {
     left: -16px;
 }
+
 .timeline-content {
     padding: 20px 30px;
-    background-color: var(--primary-color);
+    background-color: rgba(0, 191, 255, 0.1);
     position: relative;
     border-radius: 6px;
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0, 191, 255, 0.5);
+}
+
+.timeline-content h3 {
+    color: var(--accent-color);
+    margin-top: 0;
+    font-size: 1.5em; /* Smaller than h2 */
+    margin-bottom: 0.5em;
+}
+
+.timeline-content h2 {
+    color: var(--accent-color);
+    margin-top: 0;
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    color: var(--primary-color);
+}
+
+.timeline-content .date {
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 1em;
+    margin-bottom: 0.5em;
+}
+
+.timeline-content p {
+    color: var(--text-color);
+    font-size: 0.9em;
+    line-height: 1.6;
+    margin-bottom: 0;
 }
 
 /*Skills Page*/
