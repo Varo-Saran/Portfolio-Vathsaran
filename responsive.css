@@ -5,6 +5,16 @@
     .container {
         width: 95%;
     }
+    .skill-category h3 {
+        font-size: 1.8em;
+    }
+
+    .skill-item h4 {
+        font-size: 1.1em;
+    }
+    .additional-skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
 }
 
 /* Tablet and smaller desktops */
@@ -19,6 +29,46 @@
 
     .hero p {
         font-size: 1.1em;
+    }
+    .skill-category {
+        margin-bottom: 30px;
+    }
+
+    .skill-category h3 {
+        font-size: 1.6em;
+        margin-bottom: 15px;
+    }
+
+    .skill-item {
+        margin-bottom: 15px;
+    }
+
+    .skill-item h4 {
+        font-size: 1em;
+    }
+
+    .skill-bar-container {
+        height: 18px;
+    }
+
+    .skill-percentage {
+        font-size: 0.8em;
+    }
+    .additional-skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    .additional-skills-grid .skill-item {
+        padding: 15px;
+    }
+
+    .additional-skills-grid .skill-item i {
+        font-size: 1.8em;
+    }
+
+    .additional-skills-grid .skill-item span {
+        font-size: 0.9em;
     }
 
     .project-grid,
@@ -216,6 +266,53 @@
         margin-bottom: 40px;
     }
 
+    .skill-category {
+        margin-bottom: 25px;
+    }
+
+    .skill-category h3 {
+        font-size: 1.4em;
+        margin-bottom: 12px;
+    }
+
+    .skill-item {
+        margin-bottom: 12px;
+    }
+
+    .skill-item h4 {
+        font-size: 0.9em;
+        margin-bottom: 3px;
+    }
+
+    .skill-bar-container {
+        height: 16px;
+    }
+
+    .skill-percentage {
+        font-size: 0.75em;
+    }
+
+    .hologram {
+        padding: 20px;
+    }
+    .additional-skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 10px;
+    }
+
+    .additional-skills-grid .skill-item {
+        padding: 12px;
+    }
+
+    .additional-skills-grid .skill-item i {
+        font-size: 1.6em;
+        margin-bottom: 8px;
+    }
+
+    .additional-skills-grid .skill-item span {
+        font-size: 0.85em;
+    }
+
     .project-grid,
     .contact-grid {
         grid-template-columns: 1fr;
@@ -269,6 +366,53 @@
     .left::after, .right::after {
         left: 5px;
     }
+
+    .skill-category {
+        margin-bottom: 20px;
+    }
+
+    .skill-category h3 {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+    }
+
+    .skill-item {
+        margin-bottom: 10px;
+    }
+
+    .skill-item h4 {
+        font-size: 0.85em;
+        margin-bottom: 2px;
+    }
+
+    .skill-bar-container {
+        height: 14px;
+    }
+
+    .skill-percentage {
+        font-size: 0.7em;
+    }
+
+    .hologram {
+        padding: 15px;
+    }
+    .additional-skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .additional-skills-grid .skill-item {
+        padding: 10px;
+    }
+
+    .additional-skills-grid .skill-item i {
+        font-size: 1.4em;
+        margin-bottom: 5px;
+    }
+
+    .additional-skills-grid .skill-item span {
+        font-size: 0.8em;
+    }
 }
 
 /* Small phones */
@@ -283,6 +427,41 @@
 
     .section h2 {
         font-size: 1.4em;
+    }
+
+    .skill-category h3 {
+        font-size: 1.2em;
+    }
+
+    .skill-item h4 {
+        font-size: 0.8em;
+    }
+
+    .skill-bar-container {
+        height: 12px;
+    }
+
+    .skill-percentage {
+        font-size: 0.65em;
+    }
+
+    .hologram {
+        padding: 10px;
+    }
+    .additional-skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .additional-skills-grid .skill-item {
+        padding: 8px;
+    }
+
+    .additional-skills-grid .skill-item i {
+        font-size: 1.3em;
+    }
+
+    .additional-skills-grid .skill-item span {
+        font-size: 0.75em;
     }
 }
 
