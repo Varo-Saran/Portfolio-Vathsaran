@@ -36,6 +36,11 @@
         font-size: 14px;
     }
 
+    .logo {
+        order: 1;
+        width: 50%;
+    }
+
     .nav-wrapper {
         flex-wrap: wrap;
     }
@@ -45,8 +50,35 @@
         width: 100%;
         margin: 10px 0;
     }
+    .search-input {
+        width: calc(100% - 40px); /* Full width minus button width */
+    }
+
+    .search-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .search-suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: 50vh; /* Limit height on mobile */
+        z-index: 1002; /* Ensure it's above the mobile menu */
+    }
+
     
     /* Navigation styles for mobile */
+    nav {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 5%;
+    }
+
     .nav-links {
         display: none;
         flex-direction: column;
@@ -61,6 +93,8 @@
         box-shadow: -5px 5px 10px rgba(0, 191, 255, 0.1);
         z-index: 1000;
         text-align: right;
+        order: 4;
+        width: 30%;
     }
 
     .nav-links.active {
@@ -88,13 +122,16 @@
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        width: 30px;
+        width: auto;
         height: 25px;
         background: transparent;
         border: none;
         cursor: pointer;
         z-index: 1001;
         transition: all 0.3s linear;
+        text-align: right;
+        padding-right: 5px;
+        order: 2;
     }
 
     .mobile-menu-toggle span {
