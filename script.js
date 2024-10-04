@@ -190,11 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
             showSuggestionsAndResults(searchInput.value);
         });
     
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                showSuggestionsAndResults(searchInput.value);
-            }
+        searchBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent form submission if it's in a form
+            showSuggestionsAndResults(searchInput.value);
         });
     
         document.addEventListener('click', (e) => {
@@ -203,19 +201,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        searchSuggestions.addEventListener('click', (e) => {
+            if (e.target.classList.contains('suggestion') || e.target.closest('.search-result')) {
+                const selectedText = e.target.classList.contains('suggestion') ? 
+                    e.target.textContent : 
+                    e.target.closest('.search-result').querySelector('a').textContent;
+                searchInput.value = selectedText;
+                searchSuggestions.style.display = 'none';
+                showSuggestionsAndResults(selectedText);
+            }
+        });
+
         console.log('Search event listeners attached');
     } else {
         console.error('Search input or button not found');
     }
 
-    // Search functionality
-    let debounceTimer;
-    searchInput.addEventListener('input', () => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            performSearch();
-        }, 300); // Wait for 300ms after the user stops typing
-    });
+    
 
     // Add a subtle glow effect to the search input on focus
     searchInput.addEventListener('focus', () => {
