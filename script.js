@@ -301,43 +301,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Mobile menu toggle with smooth transition
-    mobileMenuToggle.addEventListener('click', () => {
-        mobileMenuToggle.classList.toggle('active');
-        navLinks.style.transition = 'transform 0.3s ease-in-out';
-        if (navLinks.classList.contains('active')) {
-            navLinks.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-                navLinks.classList.remove('active');
-                navLinks.style.transform = '';
-            }, 300);
-        } else {
-            navLinks.classList.add('active');
-            navLinks.style.transform = 'translateX(0)';
-        }
-    });
+mobileMenuToggle.addEventListener('click', () => {
+    mobileMenuToggle.classList.toggle('active');
+    navLinks.classList.toggle('active');
+    
+    if (navLinks.classList.contains('active')) {
+        navLinks.style.display = 'flex';
+        setTimeout(() => {
+            navLinks.style.opacity = '1';
+            navLinks.style.transform = 'translateY(0)';
+        }, 10);
+    } else {
+        navLinks.style.opacity = '0';
+        navLinks.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+            navLinks.style.display = 'none';
+        }, 300);
+    }
+});
 
-    // Close mobile menu when a link is clicked
-    navLinkItems.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenuToggle.classList.remove('active');
-            navLinks.classList.remove('active');
-        });
+// Close mobile menu when a link is clicked
+navLinkItems.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+        navLinks.style.opacity = '0';
+        navLinks.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+            navLinks.style.display = 'none';
+        }, 300);
     });
+});
 
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (event) => {
-        const isClickInsideNav = navLinks.contains(event.target);
-        const isClickOnToggle = mobileMenuToggle.contains(event.target);
-        
-        if (!isClickInsideNav && !isClickOnToggle && navLinks.classList.contains('active')) {
-            mobileMenuToggle.classList.remove('active');
-            navLinks.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-                navLinks.classList.remove('active');
-                navLinks.style.transform = '';
-            }, 300);
-        }
-    });
+// Close mobile menu when clicking outside
+document.addEventListener('click', (event) => {
+    const isClickInsideNav = navLinks.contains(event.target);
+    const isClickOnToggle = mobileMenuToggle.contains(event.target);
+    
+    if (!isClickInsideNav && !isClickOnToggle && navLinks.classList.contains('active')) {
+        mobileMenuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+        navLinks.style.opacity = '0';
+        navLinks.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+            navLinks.style.display = 'none';
+        }, 300);
+    }
+});
 
 
     // Form submission handling
