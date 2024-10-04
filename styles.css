@@ -34,11 +34,15 @@ header {
 
 nav {
     display: flex;
+    flex-direction: column;
+    padding: 0.5rem 5%;
+}
+
+.nav-wrapper {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 5%;
-    position: relative;
-    height: 60px;
+    width: 100%;
 }
 
 .logo {
@@ -53,9 +57,7 @@ nav {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    justify-content: center;
 }
 
 .nav-links li {
@@ -111,16 +113,40 @@ nav {
     animation: glow 2s infinite;
 }
 
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+    width: 30px;
+    height: 3px;
+    background: var(--accent-color);
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+
 .search-container {
     position: relative;
+    flex-grow: 1;
+    margin: 0 20px;
 }
 
 .search-input {
+    width: 100%;
     background-color: rgba(0, 191, 255, 0.1);
     border: 2px solid var(--primary-color);
     border-radius: 20px;
     padding: 8px 15px;
-    width: 200px;
     color: var(--text-color);
     font-family: 'Orbitron', sans-serif;
     transition: all 0.3s ease;
@@ -129,7 +155,6 @@ nav {
 .search-input:focus {
     outline: none;
     box-shadow: 0 0 15px var(--accent-color);
-    width: 250px;
 }
 
 .search-input::placeholder {
@@ -137,12 +162,14 @@ nav {
 }
 
 .search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     color: var(--primary-color);
     cursor: pointer;
-    padding: 8px;
-    transition: color 0.3s ease;
 }
 
 .search-btn:hover {
@@ -165,7 +192,7 @@ nav {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    max-height: 400px;
+    max-height: 300px;
     overflow-y: auto;
     display: none;
     z-index: 1000;
