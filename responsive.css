@@ -83,19 +83,18 @@
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 30px; /* Adjust this value to match your header height */
-        right: 2px;
-        width: 25%; /* Adjust width as needed */
-        height: calc(100vh - 100px); /* Full height minus header */
+        top: 60px; /* Adjust based on your header height */
+        right: 0;
+        width: 200px; /* Fixed width */
+        max-height: calc(100vh - 60px); /* Subtract header height */
         background-color: rgba(0, 8, 20, 0.95);
         padding: 20px;
         border-bottom-left-radius: 10px;
         box-shadow: -5px 5px 10px rgba(0, 191, 255, 0.1);
         z-index: 1000;
-        text-align: right;
-        order: 4;
-        width: 30%;
+        overflow-y: auto; /* Allow scrolling if content is too long */
     }
+
 
     .nav-links.active {
         display: flex;
@@ -107,10 +106,13 @@
     }
 
     .nav-links a {
-        font-size: 1rem;
-        padding: 5px 20px;
+        font-family: 'Arial', sans-serif; /* Change to a cleaner font */
+        font-size: 1.1rem;
+        padding: 10px 15px;
         display: block;
         transition: color 0.3s ease, transform 0.3s ease;
+        text-transform: uppercase; /* Optional: make text uppercase */
+        letter-spacing: 1px; /* Optional: add letter spacing */
     }
 
     .nav-links a:hover {
@@ -170,11 +172,11 @@
     }
 
     .timeline::after {
-        left: 31px;
+        left: 50px;
     }
 
     .timeline-item {
-        width: 100%;
+        width: calc(100% - 100px);
         padding-left: 70px;
         padding-right: 25px;
     }
@@ -187,11 +189,31 @@
     }
 
     .left::after, .right::after {
-        left: 15px;
+        left: 34px;
     }
 
     .right {
         left: 0%;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.4em;
+    }
+
+    .timeline-content .date {
+        font-size: 0.95em;
+    }
+
+    .timeline-content p {
+        font-size: 0.9em;
+    }
+
+    .timeline-content {
+        padding: 15px 20px;
+    }
+
+    .timeline-item {
+        margin-bottom: 40px;
     }
 
     .project-grid,
@@ -204,6 +226,14 @@
 @media screen and (max-width: 480px) {
     body, html {
         font-size: 13px;
+    }
+
+    .nav-links {
+        width: 180px; /* Slightly smaller width for phones */
+    }
+
+    .nav-links a {
+        font-size: 1rem; /* Slightly smaller font size for phones */
     }
 
     .container {
@@ -337,5 +367,80 @@
 @media screen and (min-width: 769px) {
     .mobile-menu-toggle {
         display: none;
+    }
+}
+
+/* Responsive styles for mobile devices */
+@media screen and (max-width: 600px) {
+    .timeline::after {
+        left: 31px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    .timeline-item::before {
+        left: 60px;
+        border: medium solid var(--primary-color);
+        border-width: 10px 10px 10px 0;
+        border-color: transparent var(--primary-color) transparent transparent;
+    }
+
+    .left::after, .right::after {
+        left: 15px;
+    }
+
+    .right {
+        left: 0%;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.3em;
+    }
+
+    .timeline-content .date {
+        font-size: 0.9em;
+    }
+
+    .timeline-content p {
+        font-size: 0.85em;
+    }
+
+    .timeline-content {
+        padding: 10px 15px;
+    }
+
+    .timeline-item {
+        margin-bottom: 30px;
+    }
+}
+
+/* Additional responsive adjustments */
+@media screen and (max-width: 400px) {
+    .timeline-content h3 {
+        font-size: 1.2em;
+    }
+
+    .timeline-content .date {
+        font-size: 0.85em;
+    }
+
+    .timeline-content p {
+        font-size: 0.8em;
+    }
+
+    .timeline-item {
+        padding-left: 50px;
+    }
+
+    .timeline::after {
+        left: 21px;
+    }
+
+    .timeline-item::after {
+        left: 7px;
     }
 }
