@@ -99,6 +99,35 @@ async function performSearch(searchTerm) {
     return results;
 }
 
+function getSnippet(text, searchTerm, snippetLength = 150) {
+    const lowerText = text.toLowerCase();
+    const lowerSearchTerm = searchTerm.toLowerCase();
+    const index = lowerText.indexOf(lowerSearchTerm);
+    if (index === -1) return '';
+    
+    let start = Math.max(0, index - snippetLength / 2);
+    let end = Math.min(text.length, index + searchTerm.length + snippetLength / 2);
+
+    // Adjust start and end to not cut words in half
+    while (start > 0 && text[start] !== ' ') {
+        start--;
+    }
+    while (end < text.length && text[end] !== ' ') {
+        end++;
+    }
+
+    let snippet = text.slice(start, end).trim();
+
+    // Add ellipsis if the snippet doesn't start or end at the boundaries of the full text
+    if (start > 0) snippet = '...' + snippet;
+    if (end < text.length) snippet += '...';
+
+    // Highlight the search term in the snippet
+    const highlightedSnippet = snippet.replace(new RegExp(searchTerm, 'gi'), match => `<mark>${match}</mark>`);
+
+    return highlightedSnippet;
+}
+
 // Particle.js configuration
 particlesJS('particles-js', {
     particles: {
