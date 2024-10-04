@@ -275,23 +275,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Form submission handling
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Here you would typically send the form data to a server
-            try {
-                // Simulating an asynchronous operation
-                setTimeout(() => {
-                    alert('Thank you for your message. I will get back to you soon!');
-                    this.reset();
-                }, 1000);
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                alert('There was an error submitting your message. Please try again later.');
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault(); // Prevent the form from submitting normally
+
+        if (!validateForm(this)) {
+            return;
+        }
+
+        const submitButton = this.querySelector('.submit-btn');
+        let feedbackDiv = document.querySelector('.form-feedback');
+        if (!feedbackDiv) {
+            feedbackDiv = document.createElement('div');
+            feedbackDiv.className = 'form-feedback';
+            this.appendChild(feedbackDiv);
+        }
+
+        try {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            feedbackDiv.textContent = 'Submitting your message...';
+            feedbackDiv.className = 'form-feedback info';
+
+            const formData = new FormData(this);
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                feedbackDiv.textContent = 'Thank you for your message. I will get back to you soon!';
+                feedbackDiv.className = 'form-feedback success';
+                this.reset();
+            } else {
+                throw new Error(result.error || 'Form submission failed');
             }
-        });
-    }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            feedbackDiv.textContent = 'There was an error submitting your message. Please try again later.';
+            feedbackDiv.className = 'form-feedback error';
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Send Message';
+            // Scroll to the feedback message
+            feedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    });
+}
+
+function validateForm(form) {
+    const requiredFields = form.querySelectorAll('[required]');
+    let isValid = true;
+
+    requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+            isValid = false;
+            field.classList.add('error');
+            let errorMsg = field.nextElementSibling;
+            if (!errorMsg || !errorMsg.classList.contains('error-message')) {
+                errorMsg = document.createElement('span');
+                errorMsg.className = 'error-message';
+                field.parentNode.insertBefore(errorMsg, field.nextSibling);
+            }
+            errorMsg.textContent = `${field.name} is required`;
+        } else {
+            field.classList.remove('error');
+            const errorMsg = field.nextElementSibling;
+            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                errorMsg.remove();
+            }
+        }
+    });
+
+    return isValid;
+}
+
 
     // Initial call for scroll animation
     handleScrollAnimation();
