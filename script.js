@@ -74,7 +74,7 @@ async function performSearch(searchTerm) {
                     if (cardContent.toLowerCase().includes(searchTerm.toLowerCase())) {
                         const title = cardTitle ? cardTitle.textContent : 'Project';
                         const snippet = getSnippet(cardContent, searchTerm);
-                        const anchor = `project-${index}`;
+                        const anchor = card.id || `project-${index}`;
                         results.push({ page, title, snippet, anchor });
                     }
                 });
@@ -86,7 +86,7 @@ async function performSearch(searchTerm) {
                     if (skillName && skillName.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
                         const title = skillName.textContent;
                         const snippet = `Skill: ${title}`;
-                        const anchor = `skill-${index}`;
+                        const anchor = item.id || `skill-${index}`;
                         results.push({ page, title, snippet, anchor });
                     }
                 });
@@ -248,14 +248,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         searchSuggestions.addEventListener('click', (e) => {
-            if (e.target.classList.contains('suggestion') || e.target.closest('.search-result')) {
-                const selectedText = e.target.classList.contains('suggestion') ? 
-                    e.target.textContent : 
-                    e.target.closest('.search-result').querySelector('a').textContent;
+            const suggestionItem = e.target.closest('.suggestion');
+            const searchResultItem = e.target.closest('.search-result');
+            
+            if (suggestionItem) {
+                const selectedText = suggestionItem.textContent;
                 searchInput.value = selectedText;
-                searchSuggestions.style.display = 'none';
                 showSuggestionsAndResults(selectedText);
+            } else if (searchResultItem) {
+                const link = searchResultItem.querySelector('a');
+                if (link) {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    const [page, anchor] = href.split('#');
+                    
+                    if (page === window.location.pathname.split('/').pop()) {
+                        // If it's the same page, just scroll to the anchor
+                        const targetElement = document.getElementById(anchor);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    } else {
+                        // If it's a different page, navigate to it
+                        window.location.href = href;
+                    }
+                }
             }
+            
+            searchSuggestions.style.display = 'none';
         });
 
         console.log('Search event listeners attached');
