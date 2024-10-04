@@ -364,13 +364,15 @@
 
     .form-group input,
     .form-group textarea {
-        padding: 10px 12px;
-        font-size: 0.85em;
+        width: calc(100% - 20px); /* Subtracting 20px to account for padding */
+        padding: 10px;
+        font-size: 0.9em;
     }
 
     .submit-btn {
-        padding: 10px 20px;
-        font-size: 0.9em;
+        width: 100%;
+        padding: 12px;
+        font-size: 1em;
     }
 
     .project-grid {
@@ -487,14 +489,14 @@
 
     .form-group input,
     .form-group textarea {
-        padding: 8px 10px;
-        font-size: 0.8em;
+        width: calc(100% - 16px); /* Subtracting 16px to account for padding */
+        padding: 8px;
+        font-size: 0.85em;
     }
 
     .submit-btn {
-        padding: 8px 16px;
-        font-size: 0.85em;
-        width: 100%; /* Full width button on very small screens */
+        padding: 10px;
+        font-size: 0.95em;
     }
 }
 
