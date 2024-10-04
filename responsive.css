@@ -15,6 +15,23 @@
     .additional-skills-grid {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
+
+    .contact-form {
+        max-width: 800px; /* Slightly wider form on large screens */
+    }
+
+    .form-group label {
+        font-size: 1em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 1em;
+    }
+
+    .submit-btn {
+        font-size: 1.1em;
+    }
 }
 
 /* Tablet and smaller desktops */
@@ -313,8 +330,50 @@
         font-size: 0.85em;
     }
 
-    .project-grid,
     .contact-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .contact-method {
+        padding: 15px;
+    }
+
+    .contact-method i {
+        font-size: 2em;
+    }
+
+    .contact-method h3 {
+        font-size: 1.1em;
+    }
+
+    .contact-method p {
+        font-size: 0.8em;
+    }
+
+    .contact-form {
+        padding: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 0.85em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 0.85em;
+    }
+
+    .submit-btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    .project-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -413,7 +472,41 @@
     .additional-skills-grid .skill-item span {
         font-size: 0.8em;
     }
+
+    .contact-form {
+        padding: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 0.8em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 8px 10px;
+        font-size: 0.8em;
+    }
+
+    .submit-btn {
+        padding: 8px 16px;
+        font-size: 0.85em;
+        width: 100%; /* Full width button on very small screens */
+    }
 }
+
+/* Ensure form elements are easily tappable on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .form-group input,
+    .form-group textarea,
+    .submit-btn {
+        min-height: 44px; /* Minimum touch target size */
+    }
+}
+
 
 /* Small phones */
 @media screen and (max-width: 320px) {
