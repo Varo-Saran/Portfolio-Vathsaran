@@ -6,6 +6,7 @@
     <title>Vathsaran Yasotharan - Skills</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -13,7 +14,19 @@
 
     <header>
         <nav>
-            <div class="logo">Portfolio</div>
+            <div class="nav-wrapper">
+                <div class="logo">Portfolio</div>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                    <ul class="search-suggestions"></ul>
+                </div>
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
@@ -21,18 +34,6 @@
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search...">
-                <button class="search-btn"><i class="fas fa-search"></i></button>
-                <ul class="search-suggestions"></ul>
-            </div>
-            
-            <div class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
         </nav>
     </header>
 
@@ -49,80 +50,144 @@
         <section class="section skill-category">
             <h3>Design Software</h3>
             <div class="hologram fade-in-up">
-                <h4>Adobe Photoshop</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar photoshop" style="width:80%">80%</div>
+                <div class="skill-item">
+                    <h4>Adobe Photoshop</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar photoshop" style="width:80%">
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                    </div>
                 </div>
-                <h4>Adobe Illustrator</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar illustrator" style="width:95%">95%</div>
+                <div class="skill-item">
+                    <h4>Adobe Illustrator</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar illustrator" style="width:95%">
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                    </div>
                 </div>
-                <h4>Adobe InDesign</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar indesign" style="width:60%">60%</div>
+                <div class="skill-item">
+                    <h4>Adobe InDesign</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar indesign" style="width:60%">
+                            <span class="skill-percentage">60%</span>
+                        </div>
+                    </div>
                 </div>
-                <h4>Adobe Premiere Pro</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar premierepro" style="width:50%">50%</div>
+                <div class="skill-item">
+                    <h4>Adobe Premiere Pro</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar premierepro" style="width:50%">
+                            <span class="skill-percentage">50%</span>
+                        </div>
+                    </div>
                 </div>
-                <h4>Adobe After Effects</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar aftereffects" style="width:40%">40%</div>
+                <div class="skill-item">
+                    <h4>Adobe After Effects</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar aftereffects" style="width:40%">
+                            <span class="skill-percentage">40%</span>
+                        </div>
+                    </div>
                 </div>
-                <h4>Adobe Animate</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar animate" style="width:60%">60%</div>
+                <div class="skill-item">
+                    <h4>Adobe Animate</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar animate" style="width:60%">
+                            <span class="skill-percentage">60%</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-
+        
         <section class="section skill-category">
             <h3>Programming Languages</h3>
             <div class="hologram fade-in-up">
-                <h4>C#</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar csharp" style="width:30%">30%</div>
+                <div class="skill-item">
+                    <h4>C#</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar csharp" style="width:30%">
+                            <span class="skill-percentage">30%</span>
+                        </div>
+                    </div>
                 </div>
-                <h4>Python</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar python" style="width:50%">50%</div>
+                <div class="skill-item">
+                    <h4>Python</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar python" style="width:50%">
+                            <span class="skill-percentage">50%</span>
+                        </div>
+                    </div>
                 </div>
-                <h4>SQL</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar sql" style="width:40%">40%</div>
+                <div class="skill-item">
+                    <h4>SQL</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar sql" style="width:40%">
+                            <span class="skill-percentage">40%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section skill-category">
+            <h3>Web Technologies</h3>
+            <div class="hologram fade-in-up">
+                <div class="skill-item">
+                    <h4>HTML</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar html" style="width:90%">
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <h4>CSS</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar css" style="width:60%">
+                            <span class="skill-percentage">60%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <h4>JavaScript</h4>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar javascript" style="width:20%">
+                            <span class="skill-percentage">20%</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="section skill-category">
-            <h3>Web Technologies</h3>
-            <div class="hologram fade-in-up">
-                <h4>HTML</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar html" style="width:90%">90%</div>
-                </div>
-                <h4>CSS</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar css" style="width:60%">60%</div>
-                </div>
-                <h4>JavaScript</h4>
-                <div class="skill-bars">
-                    <div class="skill-bar javascript" style="width:20%">20%</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
             <h3>Additional Skills</h3>
-            <div class="hologram fade-in-up">
-                <ul>
-                    <li>Data Visualization</li>
-                    <li>Statistical Analysis</li>
-                    <li>Machine Learning (Basic)</li>
-                    <li>Project Management</li>
-                    <li>User Interface Design</li>
-                    <li>Logo Design</li>
-                </ul>
+            <div class="hologram fade-in-up additional-skills-grid">
+                <div class="skill-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Data Visualization</span>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-calculator"></i>
+                    <span>Statistical Analysis</span>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-brain"></i>
+                    <span>Machine Learning (Basic)</span>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-tasks"></i>
+                    <span>Project Management</span>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-desktop"></i>
+                    <span>User Interface Design</span>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-paint-brush"></i>
+                    <span>Logo Design</span>
+                </div>
             </div>
         </section>
     </div>
