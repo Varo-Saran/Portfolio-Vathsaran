@@ -695,37 +695,97 @@ body {
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-.project-card {
-    background: rgba(0, 168, 255, 0.1);
-    border: 2px solid var(--primary-color);
-    border-radius: 10px;
+    gap: 30px;
     padding: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.project-card {
+    background: rgba(0, 168, 255, 0.05);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(77, 195, 255, 0.1) 0%, transparent 70%);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+    z-index: 0;
+}
+
 .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 168, 255, 0.3);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 191, 255, 0.3);
 }
+
+.project-card:hover::before {
+    top: -75%;
+    left: -75%;
+}
+
 .project-card h3 {
     color: var(--accent-color);
-}
-.project-card p {
+    font-size: 1.5em;
     margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
 }
-.project-card .technologies {
+
+.project-card p {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-size: 0.95em;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+.technologies {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-top: auto;
+    position: relative;
+    z-index: 1;
 }
-.project-card .tech-tag {
+
+.tech-tag {
     background-color: var(--secondary-color);
     color: var(--text-color);
-    padding: 5px 10px;
+    padding: 5px 12px;
     border-radius: 20px;
     font-size: 0.8em;
+    transition: all 0.3s ease;
 }
+
+/*.project-card:hover .tech-tag {
+    background-color: var(--accent-color);
+    box-shadow: 0 0 10px rgba(77, 195, 255, 0.5);
+}*/
+
+@keyframes glowPulse {
+    0% { box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color); }
+    50% { box-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color); }
+    100% { box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color); }
+}
+
+.project-card:hover {
+    animation: glowPulse 2s infinite;
+}
+
+
 
 /*Contact Page*/
 .contact-grid {
