@@ -240,6 +240,7 @@
 
     .hero {
         justify-content: flex-start; /* Align content to the top on mobile */
+        width: 100%;
     }
 
     .slide {
@@ -276,7 +277,7 @@
     .slider-dot {
         width: 8px;
         height: 8px;
-        margin-top: -400px;
+        margin-top: -300px;
     
     }
 
