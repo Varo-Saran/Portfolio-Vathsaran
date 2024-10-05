@@ -235,7 +235,7 @@
     }
 
     .main-index{
-        padding: 50px;
+        padding: 150px;
     }
 
     .hero {
@@ -250,6 +250,7 @@
     .slide h2 {
         font-size: 3em;
         margin-bottom: 15px;
+        line-height: 1.2;
     }
 
     .slide p {
@@ -270,13 +271,13 @@
     .slider-dots {
         bottom: 10px;
         padding-bottom: 10px;
-        
     }
 
     .slider-dot {
         width: 8px;
         height: 8px;
-        margin-top: -300px;
+        margin-top: -400px;
+    
     }
 
     .section {
