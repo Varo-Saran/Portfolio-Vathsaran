@@ -249,7 +249,7 @@ nav {
 
 /* Adjust main content to account for fixed header */
 main {
-    padding-top: 125px; /* Adjust this value based on your header height */
+    padding-top: 10px; /* Adjust this value based on your header height */
 }
 
 
