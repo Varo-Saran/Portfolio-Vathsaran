@@ -183,15 +183,38 @@ function initParticles() {
     });
 }
 
-// Automatic sliding hero
+// Enhanced automatic sliding hero with typing effect
 function initSlider() {
+    const slider = document.querySelector('.hero-slider');
     const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    const dotsContainer = document.querySelector('.slider-dots');
     let currentSlide = 0;
+    let slideInterval;
+
+    function createDots() {
+        slides.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.classList.add('slider-dot');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+    }
+
+    function updateDots() {
+        document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
 
     function showSlide(index) {
+        slider.style.transform = `translateX(-${index * 100}%)`;
         slides[currentSlide].classList.remove('active');
         slides[index].classList.add('active');
         currentSlide = index;
+        updateDots();
+        typeText(slides[index].querySelector('.typing-text'));
     }
 
     function nextSlide() {
@@ -199,8 +222,83 @@ function initSlider() {
         showSlide(nextIndex);
     }
 
-    // Change slide every 5 seconds
-    setInterval(nextSlide, 5000);
+    function prevSlide() {
+        let prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prevIndex);
+    }
+
+    function goToSlide(index) {
+        showSlide(index);
+        resetInterval();
+    }
+
+    function resetInterval() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 7000); // Change slide every 7 seconds
+    }
+
+    function typeText(element) {
+        if (!element) return;
+        const text = element.getAttribute('data-text');
+        element.textContent = '';
+        let i = 0;
+        const typingInterval = setInterval(() => {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(typingInterval);
+            }
+        }, 50); // Adjust typing speed here
+    }
+
+    function typeText(element) {
+        if (!element) return;
+        const text = element.getAttribute('data-text');
+        element.textContent = '';
+        let i = 0;
+        const typingInterval = setInterval(() => {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(typingInterval);
+                element.classList.add('typing-done');
+            }
+        }, 50); // Adjust typing speed here
+    }
+
+    function showSlide(index) {
+        slider.style.transform = `translateX(-${index * 100}%)`;
+        slides[currentSlide].classList.remove('active');
+        slides[index].classList.add('active');
+        currentSlide = index;
+        updateDots();
+        
+        // Type both heading and paragraph
+        const activeSlide = slides[index];
+        const headingElement = activeSlide.querySelector('h2.typing-text');
+        const paragraphElement = activeSlide.querySelector('p.typing-text');
+        
+        if (headingElement) typeText(headingElement);
+        if (paragraphElement) typeText(paragraphElement);
+    }
+
+    // Initialize slider
+    createDots();
+    showSlide(0);
+    resetInterval();
+
+    // Event listeners for manual controls
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        resetInterval();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        resetInterval();
+    });
 }
 
 // Debounce function for performance optimization
