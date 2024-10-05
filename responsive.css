@@ -238,13 +238,12 @@
     .hero h2 {
         font-size: 4em;
         margin-bottom: -5px;
+        line-height: 1.2;
     }
 
     .hero p {
         font-size: 2em;
         padding-bottom: 20px;
-        padding-top: -20px;
-        
     }
 
     .btn {
