@@ -246,10 +246,32 @@
         padding-bottom: 20px;
     }
 
-    .btn {
-        display: inline-block;
-        padding: 20px 60px;
-        font-size: 30px;
+    .slide h2 {
+        font-size: 3em;
+    }
+
+    .slide p {
+        font-size: 1.2em;
+    }
+
+    .slider-controls {
+        padding: 0 20px;
+    }
+
+    .slider-prev,
+    .slider-next {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .slider-dots {
+        bottom: 10px;
+    }
+
+    .slider-dot {
+        width: 8px;
+        height: 8px;
     }
 
     .section {
@@ -441,9 +463,38 @@
         font-size: 1.6em;
     }
 
+    .slide h2 {
+        font-size: 2em;
+    }
+
+    .slide p {
+        font-size: 1em;
+    }
+
     .btn {
-        padding: 8px 16px;
+        padding: 10px 20px;
         font-size: 0.9em;
+    }
+
+    .slider-controls {
+        left: 2%;
+        right: 2%;
+    }
+
+    .slider-prev,
+    .slider-next {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+    .slider-dots {
+        gap: 5px;
+    }
+
+    .slider-dot {
+        width: 6px;
+        height: 6px;
     }
 
     .timeline-item {
