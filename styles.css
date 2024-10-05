@@ -249,6 +249,9 @@ nav {
 
 /* Adjust main content to account for fixed header */
 main {
+    padding-top: 100px; /* Adjust this value based on your header height */
+}
+.main-index {
     padding-top: 10px; /* Adjust this value based on your header height */
 }
 
