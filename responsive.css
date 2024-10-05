@@ -233,14 +233,28 @@
         background: var(--primary-color);
         box-shadow: 0 0 5px var(--primary-color);
     }
-    
+
+    .main-index{
+        padding: 50px;
+    }
+
+    .hero {
+        justify-content: flex-start; /* Align content to the top on mobile */
+    }
+
+    .slide {
+        padding-top: 60px; /* Add more top padding to push content down */
+        justify-content: flex-start; /* Align slide content to the top */
+    }
 
     .slide h2 {
-        font-size: 2em;
+        font-size: 3em;
+        margin-bottom: 15px;
     }
 
     .slide p {
-        font-size: 1.2em;
+        font-size: 1.5em;
+        margin-bottom: 20px;
     }
 
     .btn {
@@ -255,11 +269,14 @@
 
     .slider-dots {
         bottom: 10px;
+        padding-bottom: 10px;
+        
     }
 
     .slider-dot {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
+        margin-top: -300px;
     }
 
     .section {
