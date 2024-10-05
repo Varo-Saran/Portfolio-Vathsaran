@@ -276,11 +276,13 @@ main {
     align-items: center;
     text-align: center;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform: translateY(20px);
 }
 
 .slide.active {
     opacity: 1;
+    transform: translateY(0);
 }
 
 .slide h2, .slide p {
@@ -307,12 +309,13 @@ main {
 }
 
 .typing-text::after {
-    content: '|';
+    content: '';
     position: absolute;
-    right: -8px;
-    width: 1px;
+    right: -4px;
+    top: 0;
+    width: 2px;
     height: 100%;
-    border-right: 2px solid var(--text-color);
+    background-color: var(--text-color);
     animation: blink 0.7s infinite;
 }
 
