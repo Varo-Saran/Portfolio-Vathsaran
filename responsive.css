@@ -235,34 +235,22 @@
     }
     
 
-    .hero h2 {
-        font-size: 4em;
-        margin-bottom: -5px;
-        line-height: 1.2;
-    }
-
-    .hero p {
-        font-size: 2em;
-        padding-bottom: 20px;
-    }
-
     .slide h2 {
-        font-size: 3em;
+        font-size: 2em;
     }
 
     .slide p {
         font-size: 1.2em;
     }
 
-    .slider-controls {
-        padding: 0 20px;
+    .btn {
+        padding: 8px 20px;
+        font-size: 0.9em;
     }
 
     .slider-prev,
     .slider-next {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
+        display: none;
     }
 
     .slider-dots {
@@ -270,8 +258,8 @@
     }
 
     .slider-dot {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
     }
 
     .section {
@@ -451,20 +439,8 @@
         width: 95%;
     }
 
-    .hero h1 {
-        font-size: 1.8em;
-    }
-
-    .hero p {
-        font-size: 0.9em;
-    }
-
-    .section h2 {
-        font-size: 1.6em;
-    }
-
     .slide h2 {
-        font-size: 2em;
+        font-size: 1.5em;
     }
 
     .slide p {
@@ -472,29 +448,8 @@
     }
 
     .btn {
-        padding: 10px 20px;
-        font-size: 0.9em;
-    }
-
-    .slider-controls {
-        left: 2%;
-        right: 2%;
-    }
-
-    .slider-prev,
-    .slider-next {
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
-    }
-
-    .slider-dots {
-        gap: 5px;
-    }
-
-    .slider-dot {
-        width: 6px;
-        height: 6px;
+        padding: 6px 15px;
+        font-size: 0.8em;
     }
 
     .timeline-item {
