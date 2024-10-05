@@ -210,21 +210,20 @@ function initSlider() {
 
     function showSlide(index) {
         slider.style.transform = `translateX(-${index * 100}%)`;
-        slides[currentSlide].classList.remove('active');
-        slides[index].classList.add('active');
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
         currentSlide = index;
         updateDots();
-        typeText(slides[index].querySelector('.typing-text'));
+        typeTexts(slides[index]);
     }
 
     function nextSlide() {
-        let nextIndex = (currentSlide + 1) % slides.length;
-        showSlide(nextIndex);
+        showSlide((currentSlide + 1) % slides.length);
     }
 
     function prevSlide() {
-        let prevIndex = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(prevIndex);
+        showSlide((currentSlide - 1 + slides.length) % slides.length);
     }
 
     function goToSlide(index) {
@@ -237,25 +236,16 @@ function initSlider() {
         slideInterval = setInterval(nextSlide, 7000); // Change slide every 7 seconds
     }
 
-    function typeText(element) {
-        if (!element) return;
-        const text = element.getAttribute('data-text');
-        element.textContent = '';
-        let i = 0;
-        const typingInterval = setInterval(() => {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-            } else {
-                clearInterval(typingInterval);
-            }
-        }, 50); // Adjust typing speed here
+    function typeTexts(slide) {
+        const elements = slide.querySelectorAll('.typing-text');
+        elements.forEach(element => typeText(element));
     }
 
     function typeText(element) {
         if (!element) return;
         const text = element.getAttribute('data-text');
         element.textContent = '';
+        element.classList.remove('typing-done');
         let i = 0;
         const typingInterval = setInterval(() => {
             if (i < text.length) {
@@ -266,22 +256,6 @@ function initSlider() {
                 element.classList.add('typing-done');
             }
         }, 50); // Adjust typing speed here
-    }
-
-    function showSlide(index) {
-        slider.style.transform = `translateX(-${index * 100}%)`;
-        slides[currentSlide].classList.remove('active');
-        slides[index].classList.add('active');
-        currentSlide = index;
-        updateDots();
-        
-        // Type both heading and paragraph
-        const activeSlide = slides[index];
-        const headingElement = activeSlide.querySelector('h2.typing-text');
-        const paragraphElement = activeSlide.querySelector('p.typing-text');
-        
-        if (headingElement) typeText(headingElement);
-        if (paragraphElement) typeText(paragraphElement);
     }
 
     // Initialize slider
@@ -355,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initSlider();
     }
 
+
     if (searchInput && searchBtn) {
         let debounceTimer;
 
@@ -425,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchBtn.addEventListener('click', (e) => {
         e.preventDefault(); // Prevent form submission if it's in a form
-        performSearch();
+        showSuggestionsAndResults(searchInput.value);
     });
 
 
