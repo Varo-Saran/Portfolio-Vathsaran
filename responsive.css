@@ -460,16 +460,16 @@
     }
 
     .slide h2 {
-        font-size: 1.5em;
+        font-size: 4em;
     }
 
     .slide p {
-        font-size: 1em;
+        font-size: 2em;
     }
 
     .btn {
-        padding: 6px 15px;
-        font-size: 0.8em;
+        padding: 15px 24px;
+        font-size: 2em;
     }
 
     .timeline-item {
