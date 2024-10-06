@@ -237,15 +237,25 @@ function initSlider() {
     }
 
     function typeTexts(slide) {
-        const elements = slide.querySelectorAll('.typing-text');
-        elements.forEach(element => typeText(element));
+        const heading = slide.querySelector('h2');
+        const paragraph = slide.querySelector('p');
+        
+        if (heading) {
+            typeText(heading, () => {
+                if (paragraph) {
+                    setTimeout(() => typeText(paragraph), 500);
+                }
+            });
+        } else if (paragraph) {
+            typeText(paragraph);
+        }
     }
 
-    function typeText(element) {
+    function typeText(element, callback) {
         if (!element) return;
         const text = element.getAttribute('data-text');
         element.textContent = '';
-        element.classList.remove('typing-done');
+        element.classList.add('typing-text');
         let i = 0;
         const typingInterval = setInterval(() => {
             if (i < text.length) {
@@ -253,7 +263,8 @@ function initSlider() {
                 i++;
             } else {
                 clearInterval(typingInterval);
-                element.classList.add('typing-done');
+                element.classList.remove('typing-text');
+                if (callback) callback();
             }
         }, 50); // Adjust typing speed here
     }
