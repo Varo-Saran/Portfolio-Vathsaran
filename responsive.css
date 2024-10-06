@@ -465,7 +465,7 @@
     }
 
     .main-index{
-        padding-top: 150px;
+        padding-top: 225px;
     }
 
     .slide h2 {
@@ -478,7 +478,7 @@
 
     .btn {
         position: fixed;
-        margin-top: 40px;
+        margin-top: 70px;
         padding: 8px 18px;
         font-size: 1.2em;
     }
