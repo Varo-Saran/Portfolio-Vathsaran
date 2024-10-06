@@ -465,7 +465,7 @@
     }
 
     .main-index{
-        padding-top: 100px;
+        padding-top: 130px;
     }
 
     .slide h2 {
@@ -473,12 +473,12 @@
     }
 
     .slide p {
-        font-size: 1em;
+        font-size: 1.2em;
     }
 
     .btn {
-        padding: 12px 22px;
-        font-size: 2em;
+        padding: 10px 20px;
+        font-size: 1.8em;
     }
 
     .slider-dots {
@@ -489,7 +489,7 @@
     .slider-dot {
         width: 6px;
         height: 6px;
-        margin-top: -100px;
+        margin-top: -180px;
     
     }
 
