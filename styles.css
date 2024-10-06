@@ -303,7 +303,7 @@ main {
 
 .typing-text {
     display: inline-block;
-    border-right: 2px solid var(--text-color);
+    border-right: 1px solid var(--text-color);
     padding-right: 5px;
     animation: blink-caret 0.75s step-end infinite;
 }
@@ -316,7 +316,7 @@ main {
     width: 2px;
     height: 100%;
     background-color: var(--text-color);
-    animation: blink 0.7s infinite;
+    
 }
 
 .typing-text.typing-done::after {
