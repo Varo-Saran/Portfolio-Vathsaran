@@ -464,12 +464,24 @@
     }
 
     .slide p {
-        font-size: 2em;
+        font-size: 1.5em;
     }
 
     .btn {
         padding: 15px 24px;
         font-size: 2em;
+    }
+
+    .slider-dots {
+        bottom: 0px;
+        padding-bottom: 0px;
+    }
+
+    .slider-dot {
+        width: 6px;
+        height: 6px;
+        margin-top: -300px;
+    
     }
 
     .timeline-item {
