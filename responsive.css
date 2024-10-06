@@ -478,9 +478,10 @@
 
     .btn {
         position: fixed;
-        margin-top: 70px;
+        margin-top: 120px;
         padding: 8px 18px;
         font-size: 1.2em;
+        border-radius: 100px;
     }
 
     .slider-dots {
@@ -491,7 +492,7 @@
     .slider-dot {
         width: 6px;
         height: 6px;
-        margin-top: -350px;
+        margin-top: -400px;
     
     }
 
