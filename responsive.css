@@ -802,3 +802,9 @@
         left: 7px;
     }
 }
+
+@media (max-width: 850px) {
+    .skills-container-vertical {
+        padding: 0 20px;
+    }
+}
