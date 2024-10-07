@@ -487,6 +487,8 @@ main {
     border-radius: 5px;
     transition: background-color 0.3s ease;
     color: var(--accent-color);
+    position: fixed;
+    margin-bottom: -400px;
 }
 
 .btn:hover {
