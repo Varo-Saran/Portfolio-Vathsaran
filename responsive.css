@@ -464,6 +464,8 @@
         justify-content: flex-start; /* Align content to the top on mobile */
         width: 100%;
         overflow-x: hidden;
+        height: auto; /* Allow hero to expand vertically */
+        min-height: 100vh;
 
     }
 
@@ -809,5 +811,14 @@
 @media (max-width: 850px) {
     .skills-container-vertical {
         padding: 0 20px;
+    }
+}
+
+/* Adjust table layouts for small screens */
+@media screen and (max-width: 600px) {
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
     }
 }
