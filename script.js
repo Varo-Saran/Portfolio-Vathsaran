@@ -413,10 +413,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Touch event listeners
-    //slider.addEventListener('touchstart', handleTouchStart, false);
-    //slider.addEventListener('touchmove', handleTouchMove, false);
-    slider.addEventListener('touchstart', handleTouchStart, {passive: true});
-    slider.addEventListener('touchmove', handleTouchMove, {passive: true});
+    slider.addEventListener('touchstart', handleTouchStart, false);
+    slider.addEventListener('touchmove', handleTouchMove, false);
     slider.addEventListener('touchend', handleTouchEnd, false);
 
 
