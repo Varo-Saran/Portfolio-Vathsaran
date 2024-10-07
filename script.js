@@ -221,10 +221,10 @@ function initSlider() {
             // Force a reflow to ensure the quick reset is applied
             slider.offsetHeight;
             
-            // Then move to the second slide with animation
+            // Then move to the first slide with animation
             slider.style.transition = 'transform 0.5s ease-in-out';
-            slider.style.transform = `translateX(-100%)`;
-            currentSlide = 1;
+            slider.style.transform = `translateX(0%)`;
+            currentSlide = 0;
         } else if (index < 0) {
             // If we're moving before the first slide, quickly set to the last slide without animation
             slider.style.transition = 'none';
@@ -233,17 +233,17 @@ function initSlider() {
             // Force a reflow
             slider.offsetHeight;
             
-            // Then move to the second-to-last slide with animation
+            // Then move to the last slide with animation
             slider.style.transition = 'transform 0.5s ease-in-out';
-            slider.style.transform = `translateX(-${(slideCount - 2) * 100}%)`;
-            currentSlide = slideCount - 2;
+            slider.style.transform = `translateX(-${(slideCount - 1) * 100}%)`;
+            currentSlide = slideCount - 1;
         } else {
             // Normal slide transition
             slider.style.transition = 'transform 0.5s ease-in-out';
             slider.style.transform = `translateX(${newPosition}%)`;
             currentSlide = index;
         }
-
+    
         slides.forEach((slide, i) => {
             slide.classList.toggle('active', i === currentSlide);
         });
