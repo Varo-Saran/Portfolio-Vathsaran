@@ -192,6 +192,8 @@ function initSlider() {
     const dotsContainer = document.querySelector('.slider-dots');
     let currentSlide = 0;
     let slideInterval;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     function createDots() {
         slides.forEach((_, index) => {
@@ -209,21 +211,54 @@ function initSlider() {
     }
 
     function showSlide(index) {
-        slider.style.transform = `translateX(-${index * 100}%)`;
+        const slideCount = slides.length;
+        const newPosition = -index * 100;
+        
+        // Create a continuous loop effect
+        if (index >= slideCount) {
+            // If we're moving past the last slide, quickly reset to the first slide without animation
+            slider.style.transition = 'none';
+            slider.style.transform = `translateX(0%)`;
+            
+            // Force a reflow to ensure the quick reset is applied
+            slider.offsetHeight;
+            
+            // Then move to the second slide with animation
+            slider.style.transition = 'transform 0.5s ease-in-out';
+            slider.style.transform = `translateX(-100%)`;
+            currentSlide = 1;
+        } else if (index < 0) {
+            // If we're moving before the first slide, quickly set to the last slide without animation
+            slider.style.transition = 'none';
+            slider.style.transform = `translateX(-${(slideCount - 1) * 100}%)`;
+            
+            // Force a reflow
+            slider.offsetHeight;
+            
+            // Then move to the second-to-last slide with animation
+            slider.style.transition = 'transform 0.5s ease-in-out';
+            slider.style.transform = `translateX(-${(slideCount - 2) * 100}%)`;
+            currentSlide = slideCount - 2;
+        } else {
+            // Normal slide transition
+            slider.style.transition = 'transform 0.5s ease-in-out';
+            slider.style.transform = `translateX(${newPosition}%)`;
+            currentSlide = index;
+        }
+
         slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
+            slide.classList.toggle('active', i === currentSlide);
         });
-        currentSlide = index;
         updateDots();
-        typeTexts(slides[index]);
+        typeTexts(slides[currentSlide]);
     }
 
     function nextSlide() {
-        showSlide((currentSlide + 1) % slides.length);
+        showSlide(currentSlide + 1);
     }
 
     function prevSlide() {
-        showSlide((currentSlide - 1 + slides.length) % slides.length);
+        showSlide(currentSlide - 1);
     }
 
     function goToSlide(index) {
@@ -241,8 +276,19 @@ function initSlider() {
         const paragraph = slide.querySelector('p');
         
         if (heading) {
+            // Hide the paragraph initially
+            if (paragraph) {
+                paragraph.style.opacity = '0';
+                paragraph.style.visibility = 'hidden';
+            }
+            
             typeText(heading, () => {
                 if (paragraph) {
+                    // Make paragraph visible but keep it empty
+                    paragraph.style.visibility = 'visible';
+                    paragraph.style.opacity = '1';
+                    paragraph.textContent = '';
+                    // Start typing the paragraph
                     setTimeout(() => typeText(paragraph), 500);
                 }
             });
@@ -266,8 +312,30 @@ function initSlider() {
                 element.classList.remove('typing-text');
                 if (callback) callback();
             }
-        }, 50); // Adjust typing speed here
+        }, 70); // Adjust typing speed here
     }
+
+    function handleTouchStart(e) {
+        touchStartX = e.touches[0].clientX;
+    }
+
+    function handleTouchMove(e) {
+        touchEndX = e.touches[0].clientX;
+    }
+
+    function handleTouchEnd() {
+        if (touchStartX - touchEndX > 50) {
+            // Swipe left
+            nextSlide();
+        } else if (touchEndX - touchStartX > 50) {
+            // Swipe right
+            prevSlide();
+        }
+        // Reset values
+        touchStartX = 0;
+        touchEndX = 0;
+    }
+
 
     // Initialize slider
     createDots();
@@ -285,6 +353,10 @@ function initSlider() {
         resetInterval();
     });
 }
+
+
+
+
 
 // Debounce function for performance optimization
 function debounce(func, wait = 20, immediate = true) {
@@ -339,6 +411,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelector('.hero-slider')) {
         initSlider();
     }
+
+    // Touch event listeners
+    //slider.addEventListener('touchstart', handleTouchStart, false);
+    //slider.addEventListener('touchmove', handleTouchMove, false);
+    slider.addEventListener('touchstart', handleTouchStart, {passive: true});
+    slider.addEventListener('touchmove', handleTouchMove, {passive: true});
+    slider.addEventListener('touchend', handleTouchEnd, false);
 
 
     if (searchInput && searchBtn) {
