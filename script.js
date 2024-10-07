@@ -192,8 +192,6 @@ function initSlider() {
     const dotsContainer = document.querySelector('.slider-dots');
     let currentSlide = 0;
     let slideInterval;
-    let touchStartX = 0;
-    let touchEndX = 0;
 
     function createDots() {
         slides.forEach((_, index) => {
@@ -315,28 +313,6 @@ function initSlider() {
         }, 70); // Adjust typing speed here
     }
 
-    function handleTouchStart(e) {
-        touchStartX = e.touches[0].clientX;
-    }
-
-    function handleTouchMove(e) {
-        touchEndX = e.touches[0].clientX;
-    }
-
-    function handleTouchEnd() {
-        if (touchStartX - touchEndX > 50) {
-            // Swipe left
-            nextSlide();
-        } else if (touchEndX - touchStartX > 50) {
-            // Swipe right
-            prevSlide();
-        }
-        // Reset values
-        touchStartX = 0;
-        touchEndX = 0;
-    }
-
-
     // Initialize slider
     createDots();
     showSlide(0);
@@ -353,10 +329,6 @@ function initSlider() {
         resetInterval();
     });
 }
-
-
-
-
 
 // Debounce function for performance optimization
 function debounce(func, wait = 20, immediate = true) {
@@ -411,11 +383,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelector('.hero-slider')) {
         initSlider();
     }
-
-    // Touch event listeners
-    slider.addEventListener('touchstart', handleTouchStart, false);
-    slider.addEventListener('touchmove', handleTouchMove, false);
-    slider.addEventListener('touchend', handleTouchEnd, false);
 
 
     if (searchInput && searchBtn) {
