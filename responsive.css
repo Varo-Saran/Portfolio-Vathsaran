@@ -101,6 +101,7 @@
 
     body, html {
         font-size: 14px;
+        overflow-x: hidden;
     }
 
     .logo {
@@ -462,6 +463,8 @@
     .hero {
         justify-content: flex-start; /* Align content to the top on mobile */
         width: 100%;
+        overflow-x: hidden;
+
     }
 
     .main-index{
