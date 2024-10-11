@@ -855,6 +855,38 @@ userInput.addEventListener('keypress', (e) => {
   }
 });
 
+const isMobile = () => window.innerWidth <= 768;
+
+chatbotToggle.addEventListener('click', () => {
+  chatbot.style.display = 'flex';
+  chatbotToggle.style.display = 'none';
+  if (isMobile()) {
+    document.body.style.overflow = 'hidden'; // Prevent scrolling on mobile when chatbot is open
+  }
+});
+
+closeChatbotBtn.addEventListener('click', () => {
+  chatbot.style.display = 'none';
+  chatbotToggle.style.display = 'flex';
+  if (isMobile()) {
+    document.body.style.overflow = ''; // Restore scrolling on mobile when chatbot is closed
+  }
+});
+
+// Adjust chatbot height on resize
+window.addEventListener('resize', () => {
+  if (isMobile() && chatbot.style.display === 'flex') {
+    chatbot.style.height = `${window.innerHeight}px`;
+  } else {
+    chatbot.style.height = '400px'; // Default height for larger screens
+  }
+});
+
+// Initialize chatbot height
+if (isMobile()) {
+  chatbot.style.height = `${window.innerHeight}px`;
+}
+
 // Initialize chatbot state
 chatbot.style.display = 'none';
 chatbotToggle.style.display = 'flex';
