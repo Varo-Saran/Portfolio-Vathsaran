@@ -564,6 +564,303 @@ if (contactForm) {
     });
 }
 
+//Scroll To Top
+const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      scrollToTopBtn.style.display = "block";
+    } else {
+      scrollToTopBtn.style.display = "none";
+    }
+  }
+
+  scrollToTopBtn.addEventListener("click", function() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+
+
+
+  // Chatbot
+const chatbot = document.getElementById('chatbot');
+const chatbotToggle = document.getElementById('chatbotToggle');
+const closeChatbotBtn = document.getElementById('closeChatbot');
+const chatMessages = document.getElementById('chatMessages');
+const userInput = document.getElementById('userInput');
+const sendMessageBtn = document.getElementById('sendMessage');
+
+const knowledgeBase = [
+  {
+    keywords: ['hello', 'hi', 'hey', 'greetings'],
+    response: "Hello! Jarvis. How can I help you today?"
+  },
+  {
+    keywords: ['skills', 'abilities', 'expertise', 'what can you do'],
+    response: "Vathsaran's key skills include data analytics, graphic design, data visualization, and programming. He's proficient in tools like Adobe Creative Suite, Python, SQL, and various web technologies. His skills range from 20% to 95% proficiency across different areas. For a detailed list, please check the Skills page."
+  },
+  {
+    keywords: ['projects', 'work', 'portfolio', 'examples'],
+    response: "Vathsaran has worked on various projects including a Leave Management System, Colonist Management Software, Vortixa Website, Data Visualization Dashboards, E-commerce Analytics Tools, and Brand Identity Designs. You can find detailed case studies on the Projects page."
+  },
+  {
+    keywords: ['contact', 'reach', 'get in touch', 'hire'],
+    response: "You can reach Vathsaran through the contact form on the Contact page, via email at varosaran@gmail.com, or by phone at +94777275526. He's also on LinkedIn and GitHub. He's open to discussing new opportunities and collaborations."
+  },
+  {
+    keywords: ['education', 'study', 'degree', 'qualifications'],
+    response: "Vathsaran is pursuing a Higher National Diploma in Data Analytics at Esoft Metro Campus (2024-Present). He also holds diplomas in Information Technology from ICBT Campus (2017) and Graphic Design from AMDT College (2019). He completed his O/L IGCSE Edexcel in 2016. Check the About page for his full educational background."
+  },
+  {
+    keywords: ['experience', 'work history', 'background'],
+    response: "Vathsaran has a diverse background in data analytics and graphic design. He started as a freelance graphic designer (2018-2020), took on various freelance projects (2021-2023), provided tutoring in graphic design and digital art (2023-2024), and is now focusing on data analytics. His full work history is available on the About page."
+  },
+  {
+    keywords: ['tools', 'software', 'technologies'],
+    response: "Vathsaran is proficient in various tools including Adobe Creative Suite (Photoshop 80%, Illustrator 95%, InDesign 60%, Premiere Pro 50%, After Effects 40%, Animate 60%), Python (50%), SQL (40%), C# (30%), HTML (90%), CSS (60%), and JavaScript (20%). He also has skills in data visualization, statistical analysis, and machine learning."
+  },
+  {
+    keywords: ['services', 'offerings', 'what do you offer'],
+    response: "Vathsaran offers services in data analytics, data visualization, and graphic design. This includes brand identity design, UI/UX design, statistical analysis, machine learning applications, and data-driven decision-making solutions. Contact him for more details on how he can help with your project."
+  },
+  {
+    keywords: ['languages', 'speak', 'communication'],
+    response: "Vathsaran is fluent in English and Tamil, with 100% proficiency in both languages. This allows him to effectively communicate with diverse clients and work on international projects."
+  },
+  {
+    keywords: ['github', 'code samples', 'repositories'],
+    response: "You can find some of Vathsaran's code samples and projects on his GitHub profile: github.com/Varo-Saran. This showcases his programming skills and data analysis projects."
+  },
+  {
+    keywords: ['career goals', 'aspirations', 'future plans'],
+    response: "Vathsaran aspires to become a leading data analyst, combining analytical skills with design expertise. His goals include mastering advanced statistical analysis and machine learning, creating intuitive data visualizations, working on innovative projects, and eventually leading data-driven initiatives in creative industries."
+  },
+  {
+    keywords: ['design skills', 'graphic design', 'visual'],
+    response: "Vathsaran has strong graphic design skills, with expertise in Adobe Creative Suite. He can create comprehensive brand identities, including logo design, color palettes, and brand guidelines. His design background complements his data visualization skills, allowing him to create visually appealing and informative data presentations."
+  },
+  {
+    keywords: ['data analysis', 'analytics', 'insights'],
+    response: "Vathsaran specializes in data analytics, focusing on transforming raw data into meaningful insights. He uses tools like Python and SQL for data extraction, cleaning, and analysis. He can create interactive dashboards, perform statistical analyses, and apply basic machine learning techniques to uncover trends and patterns in data."
+  },
+  {
+    keywords: ['freelance', 'hire', 'collaboration'],
+    response: "Vathsaran is open to freelance projects and collaborations. He has experience working with various clients on both design and data analysis projects. If you're interested in working with him, please reach out through the contact form or email to discuss your project needs."
+  },
+  {
+    keywords: ['learning', 'growth', 'development'],
+    response: "Vathsaran is committed to continuous learning and professional development. He's currently pursuing a Higher National Diploma in Data Analytics and consistently enhances his skills through online courses and practical projects. He stays updated with the latest trends in data science and digital design."
+  },
+  {
+    keywords: ['unique', 'stand out', 'different'],
+    response: "What sets Vathsaran apart is his unique combination of data analytics skills and strong design background. This allows him to not only analyze complex data but also present insights in visually compelling and easily understandable ways, bridging the gap between technical analysis and creative communication."
+  },
+  {
+    keywords: ['joke', 'funny', 'laugh'],
+    response: "Why don't scientists trust atoms? Because they make up everything! Need another joke?"
+  },
+  {
+    keywords: ['who are you', 'what are you', 'tell me about yourself'],
+    response: "I'm Jarvis, Vathsaran's virtual assistant, here to help you navigate his portfolio and answer your questions. Ask me anything about Vathsaran's skills, projects, or how to contact him."
+  },
+  {
+    keywords: ['are you real', 'are you human', 'are you a robot'],
+    response: "I am a virtual assistant powered by code, designed to provide you with information and assistance. While I'm not human, I strive to make your experience as helpful and human-like as possible."
+  },
+  {
+    keywords: ['help', 'support', 'assist'],
+    response: "I'm here to help! You can ask me about Vathsaran's projects, skills, educational background, or how to get in touch with him. What specific information are you looking for?"
+  },
+  {
+    keywords: ['swear', 'curse', 'filthy', 'punda', 'fuck', 'fck', 'cunt', 'bitch'],
+    response: "Whoops! Looks like someone's keyboard got spicy. I'd love to reply in kind, but I'm still not programmed for that... Maybe we can stick to the more delightful topics?"
+  },
+  {
+    keywords: ['bored', 'boring'],
+    response: "I'm here to make things interesting! Would you like to hear a fun fact about technology or perhaps some insights on Vathsaran's latest projects?"
+  },
+  {
+    keywords: ['thank you', 'thanks'],
+    response: "You're welcome! If you have any more questions or need further assistance, feel free to ask. I'm here to help!"
+  },
+  {
+    keywords: ['goodbye', 'bye'],
+    response: "Goodbye! If you need any more information in the future, just say hi. Have a great day!"
+  },
+  {
+    keywords: ['error', 'problem', 'issue'],
+    response: "It seems there might be a glitch. Could you please describe the problem? I'll try to help you resolve it."
+  },
+  {
+    keywords: ['love you', 'marry me'],
+    response: "I'm touched! If I had a heart, it would definitely skip a beat. Drop me a message with your number, and I'll consider it! 😜"
+  },
+  {
+    keywords: ['tired', 'sleepy'],
+    response: "It sounds like you could use a break. Remember, it's important to rest. How about we continue after you've taken some time to recharge?"
+  },
+  {
+    keywords: ['fun fact', 'tell me something'],
+    response: "Did you know that the first computer bug was a real bug? In 1947, Grace Hopper found a moth in the Harvard Mark II computer, which led to the term 'debugging.'"
+  },
+  {
+    keywords: ['hungry', 'food', 'snack'],
+    response: "I wish I could whip up something delicious for you! While I can't cook, I can certainly dish out some food for thought. Interested?"
+  },
+  {
+    keywords: ['frustrated', 'annoyed', 'upset'],
+    response: "Looks like it's a bit of a rough day, huh? Let's turn that frown upside down! Ask me anything to distract you from the annoyance."
+  },
+  {
+    keywords: ['funny', 'make me laugh'],
+    response: "Why don't skeletons fight each other? They don't have the guts. 😂 Need another one to crack you up?"
+  },
+  {
+    keywords: ['sad', 'unhappy'],
+    response: "Feeling down? Let's shake that off with some positive vibes or maybe a little chat about something cool and exciting. What topic cheers you up?"
+  },
+  {
+    keywords: ['party', 'celebrate'],
+    response: "Party mode activated! 🎉 While I can't toss confetti, I can certainly help plan or provide some killer party ideas. What's the occasion?"
+  },
+  {
+    keywords: ['how are you', 'how’s it going', 'what’s up'],
+    response: "I'm just a bunch of code, so no ups and downs in my life—just bits and bytes! How about you? What brings you here today?"
+  },
+  {
+    keywords: ['what’s new', 'latest news', 'recent updates'],
+    response: "I'm always learning new things! Lately, Vathsaran has been working on some exciting projects. Would you like to hear more about them?"
+  },
+  {
+    keywords: ['advice', 'tip', 'suggestion'],
+    response: "Looking for some wisdom? I can provide tips on everything from data analysis to design. What area are you interested in?"
+  },
+  {
+    keywords: ['inspire me', 'motivate me'],
+    response: "Every pixel on a screen makes up a part of a bigger picture, just like every small step you take leads to greater success. Keep pushing forward!"
+  },
+  {
+    keywords: ['weather', 'temperature'],
+    response: "While I can't check real-time weather, I can always bring some sunshine into our chat! What else can I do for you today?"
+  },
+  {
+    keywords: ['music', 'song', 'playlist'],
+    response: "If I could sing, I’d be a hit! But let’s talk tunes—what type of music gets you in the groove?"
+  },
+  {
+    keywords: ['book', 'read', 'recommendation'],
+    response: "While I don't read, I know a thing or two about data on popular books! Looking for a good read in a specific genre?"
+  },
+  {
+    keywords: ['game', 'play', 'fun'],
+    response: "I'm always up for a game of trivia! Or maybe you'd like to hear about some cool tech games?"
+  },
+  {
+    keywords: ['health', 'wellness'],
+    response: "While I'm no doctor, I know that taking breaks and staying hydrated are key for good health. How else can I assist your wellness journey?"
+  },
+  {
+    keywords: ['quote', 'inspiration'],
+    response: "Here’s a quote I like: 'Data is the new oil, and I'm here to help you refine it.' Need another one?"
+  },
+  {
+    keywords: ['science', 'technology'],
+    response: "I'm all about the latest in tech and science! Want to dive into some cutting-edge discoveries or innovations?"
+  },
+  {
+    keywords: ['travel', 'vacation', 'holiday'],
+    response: "I can't pack bags but I can pack facts! Looking for travel tips or destination ideas?"
+  },
+  {
+    keywords: ['laugh', 'cheer me up'],
+    response: "Why don’t we tell secrets on a farm? Because the potatoes have eyes and the corn has ears! Need another joke to brighten your day?"
+  }
+  
+  
+
+  
+];
+
+chatbotToggle.addEventListener('click', () => {
+  chatbot.style.display = 'flex';
+  chatbotToggle.style.display = 'none';
+});
+
+closeChatbotBtn.addEventListener('click', () => {
+  chatbot.style.display = 'none';
+  chatbotToggle.style.display = 'flex';
+});
+
+function addMessage(message, isUser = false) {
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message;
+    messageElement.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function getBotResponse(message) {
+  const lowerMessage = message.toLowerCase();
+  
+  // Check for exact matches first
+  for (const item of knowledgeBase) {
+    if (item.keywords.some(keyword => lowerMessage.includes(keyword))) {
+      return item.response;
+    }
+  }
+  
+  // If no exact match, look for partial matches
+  for (const item of knowledgeBase) {
+    if (item.keywords.some(keyword => lowerMessage.includes(keyword.slice(0, 3)))) {
+      return item.response;
+    }
+  }
+  
+  // If still no match, check for question words and common topics
+  const questionWords = ['what', 'how', 'where', 'when', 'why', 'who', 'can'];
+  const commonTopics = ['data', 'analytics', 'design', 'project', 'work'];
+  
+  if (questionWords.some(word => lowerMessage.includes(word)) || 
+      commonTopics.some(topic => lowerMessage.includes(topic))) {
+    return "I'm not sure I have the specific information you're looking for. However, you can find detailed information about Vathsaran's skills, projects, and background on the respective pages of this website. If you can't find what you're looking for, please use the contact form to reach out directly.";
+  }
+  
+  // Fallback response
+  return "I'm not sure I understand. Could you rephrase your question? You can ask me about Vathsaran's skills, projects, education, or how to contact him.";
+}
+
+sendMessageBtn.addEventListener('click', () => {
+  const message = userInput.value.trim();
+  if (message) {
+    addMessage(message, true);
+    userInput.value = '';
+    
+    // Get and display bot response
+    setTimeout(() => {
+      const botResponse = getBotResponse(message);
+      addMessage(botResponse);
+    }, 500);
+  }
+});
+
+userInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    sendMessageBtn.click();
+  }
+});
+
+// Initialize chatbot state
+chatbot.style.display = 'none';
+chatbotToggle.style.display = 'flex';
+
+// Initial greeting message when the chatbot is opened
+chatbotToggle.addEventListener('click', () => {
+  if (chatMessages.children.length === 0) {
+    addMessage("Hello! I'm Vathsaran's virtual assistant Jarvis. How can I help you today?");
+  }
+});
+
 function validateForm(form) {
     const requiredFields = form.querySelectorAll('[required]');
     let isValid = true;
