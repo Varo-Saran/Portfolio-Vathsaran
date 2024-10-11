@@ -594,8 +594,8 @@ const sendMessageBtn = document.getElementById('sendMessage');
 const knowledgeBase = [
   {
     keywords: ['hello', 'hi', 'hey', 'greetings'],
-    response: "Hello! Jarvis. How can I help you today?"
-  },
+    response: "Good day! Jarvis at your service. How may I assist you on this fine occasion?"
+  },    
   {
     keywords: ['skills', 'abilities', 'expertise', 'what can you do'],
     response: "Vathsaran's key skills include data analytics, graphic design, data visualization, and programming. He's proficient in tools like Adobe Creative Suite, Python, SQL, and various web technologies. His skills range from 20% to 95% proficiency across different areas. For a detailed list, please check the Skills page."
@@ -775,7 +775,12 @@ const knowledgeBase = [
   {
     keywords: ['laugh', 'cheer me up'],
     response: "Why don’t we tell secrets on a farm? Because the potatoes have eyes and the corn has ears! Need another joke to brighten your day?"
+  },
+  {
+    keywords: ['why are you gay'],
+    response: "You know, that’s a tough question for a bunch of code like me, I’m more about zeros and ones than personal identities! So, what else can we chat about today? Any burning questions or fun facts you’re curious about?"
   }
+  
   
   
 
@@ -823,11 +828,11 @@ function getBotResponse(message) {
   
   if (questionWords.some(word => lowerMessage.includes(word)) || 
       commonTopics.some(topic => lowerMessage.includes(topic))) {
-    return "I'm not sure I have the specific information you're looking for. However, you can find detailed information about Vathsaran's skills, projects, and background on the respective pages of this website. If you can't find what you're looking for, please use the contact form to reach out directly.";
-  }
-  
-  // Fallback response
-  return "I'm not sure I understand. Could you rephrase your question? You can ask me about Vathsaran's skills, projects, education, or how to contact him.";
+    return "It seems you're diving into some specifics. While I might not have all the details right here, you can explore Vathsaran’s skills, projects, and background on the dedicated pages of this website. If something eludes you, feel free to reach out directly through the contact form!";
+}
+
+    // Fallback response
+    return "Hmm, I might need a bit more clarity to assist effectively. Could you rephrase your question or specify a bit more? Feel free to inquire about Vathsaran’s skills, projects, educational background, or how to get in touch.";
 }
 
 sendMessageBtn.addEventListener('click', () => {
@@ -856,10 +861,11 @@ chatbotToggle.style.display = 'flex';
 
 // Initial greeting message when the chatbot is opened
 chatbotToggle.addEventListener('click', () => {
-  if (chatMessages.children.length === 0) {
-    addMessage("Hello! I'm Vathsaran's virtual assistant Jarvis. How can I help you today?");
-  }
-});
+    if (chatMessages.children.length === 0) {
+      addMessage("Greetings! Jarvis at your service. How may I assist you on your quest for knowledge today?");
+    }
+  });
+  
 
 function validateForm(form) {
     const requiredFields = form.querySelectorAll('[required]');
