@@ -867,33 +867,69 @@ const knowledgeBase = [
 ];
 
 
-// Context to maintain state during a session
+// Initialize chatbot state
 let chatContext = {
     lastTopic: null,
-    userGreeting: false
+    userGreeting: false,
+    isFirstInteraction: true
   };
+  
+  chatbot.style.display = 'none';
+  chatbotToggle.style.display = 'flex';
+  
+  // Reset context and display initial greeting when chatbot is opened
+  chatbotToggle.addEventListener('click', () => {
+    chatbot.style.display = 'flex';
+    chatbotToggle.style.display = 'none';
+    
+    // Reset chat context
+    chatContext = {
+      lastTopic: null,
+      userGreeting: false
+    };
+    
+    // Clear previous messages
+    chatMessages.innerHTML = '';
+    
+    // Display initial greeting
+    const timeBasedGreeting = getTimeBasedGreeting();
+    addMessage(`${timeBasedGreeting} How may I assist you on your quest for knowledge today?`);
+    
+    if (isMobile()) {
+      document.body.style.overflow = 'hidden';
+    }
+  });
   
   function updateContext(message, response) {
     const lowerMessage = message.toLowerCase();
     // Save the last topic based on certain keywords
     knowledgeBase.forEach(item => {
       if (item.keywords.some(keyword => lowerMessage.includes(keyword))) {
-        chatContext.lastTopic = item.response; // Store the last known topic's response for reference
+        chatContext.lastTopic = item.keywords[0]; // Store the first keyword as the topic
       }
     });
-    // Detect greetings to adjust responses for returning users
-    if (['hello', 'hi', 'hey', 'greetings'].some(greet => lowerMessage.includes(greet))) {
-      chatContext.userGreeting = true;
-    } else {
-      chatContext.userGreeting = false;
-    }
   }
   
   chatbotToggle.addEventListener('click', () => {
     chatbot.style.display = 'flex';
     chatbotToggle.style.display = 'none';
+    
+    // Reset chat context
+    chatContext = {
+      lastTopic: null,
+      userGreeting: false,
+      isFirstInteraction: true
+    };
+    
+    // Clear previous messages
+    chatMessages.innerHTML = '';
+    
+    // Display initial greeting
+    const timeBasedGreeting = getTimeBasedGreeting();
+    addMessage(`${timeBasedGreeting} How may I assist you on your quest for knowledge today?`);
+    
     if (isMobile()) {
-      document.body.style.overflow = 'hidden'; // Prevent scrolling on mobile when chatbot is open
+      document.body.style.overflow = 'hidden';
     }
   });
   
@@ -951,13 +987,25 @@ function getFallbackResponse(message) {
       }
     }
     
-    // Update the context before determining the final response
-    updateContext(lowerMessage, response);
-    
-    // If it's a greeting and the user has already greeted, provide a different response
-    if (chatContext.userGreeting && ['hello', 'hi', 'hey', 'greetings'].some(greet => lowerMessage.includes(greet))) {
-      return "Welcome back! Is there anything specific you'd like to know about Vathsaran's skills or projects?";
+    // If it's a greeting, handle it based on whether it's the first interaction
+    if (['hello', 'hi', 'hey', 'greetings'].some(greet => lowerMessage.includes(greet))) {
+      if (chatContext.isFirstInteraction) {
+        chatContext.isFirstInteraction = false;
+        return response; // Return the standard greeting response
+      } else {
+        const followUpResponses = [
+          "Nice to see you again! What would you like to know about Vathsaran's skills or projects?",
+          "Welcome back! How else can I assist you today?",
+          "Hello again! Is there a specific area of Vathsaran's work you're curious about?",
+          "Great to have you back! What aspect of Vathsaran's portfolio would you like to explore?",
+          "Glad you're still here! What other information can I provide about Vathsaran?"
+        ];
+        return followUpResponses[Math.floor(Math.random() * followUpResponses.length)];
+      }
     }
+    
+    // Update the context after determining the response
+    updateContext(lowerMessage, response);
     
     // If no response was found and we have a last topic, use it
     if (!response && chatContext.lastTopic) {
@@ -968,35 +1016,8 @@ function getFallbackResponse(message) {
     if (!response) {
       response = getFallbackResponse(lowerMessage);
     }
-
-    // If it's a greeting and the user has already greeted, provide a different response
-  if (chatContext.userGreeting && ['hello', 'hi', 'hey', 'greetings'].some(greet => lowerMessage.includes(greet))) {
-    const followUpResponses = [
-      "Nice to see you again! What would you like to know about Vathsaran's skills or projects?",
-      "Welcome back! How else can I assist you today?",
-      "Hello again! Is there a specific area of Vathsaran's work you're curious about?",
-      "Great to have you back! What aspect of Vathsaran's portfolio would you like to explore?",
-      "Glad you're still here! What other information can I provide about Vathsaran?"
-    ];
-    return followUpResponses[Math.floor(Math.random() * followUpResponses.length)];
-  }
     
     return response;
-  }
-  
-  // Make sure this function is also updated
-  function updateContext(message, response) {
-    const lowerMessage = message.toLowerCase();
-    // Save the last topic based on certain keywords
-    knowledgeBase.forEach(item => {
-      if (item.keywords.some(keyword => lowerMessage.includes(keyword))) {
-        chatContext.lastTopic = item.keywords[0]; // Store the first keyword as the topic
-      }
-    });
-    // Detect greetings to adjust responses for returning users
-    if (['hello', 'hi', 'hey', 'greetings'].some(greet => lowerMessage.includes(greet))) {
-      chatContext.userGreeting = true;
-    }
   }
   
   function getTimeBasedGreeting() {
