@@ -595,6 +595,14 @@ const knowledgeBase = [
   {
     keywords: ['hello', 'hi', 'hey', 'greetings'],
     response: "Good day! Jarvis at your service. How may I assist you on this fine occasion?"
+  },
+  {
+    keywords: ['how are you', 'how’s it going', 'what’s up'],
+    response: "As an AI, I don’t experience days or moods, but I’m fully operational and ready to assist you! What can I help you with today?"
+  },
+  {
+    keywords: ['ramna'],
+    response: "Ramna must be quite special! How can I assist you with your inquiry about her today?"
   },    
   {
     keywords: ['skills', 'abilities', 'expertise', 'what can you do'],
@@ -779,122 +787,270 @@ const knowledgeBase = [
   {
     keywords: ['why are you gay'],
     response: "You know, that’s a tough question for a bunch of code like me, I’m more about zeros and ones than personal identities! So, what else can we chat about today? Any burning questions or fun facts you’re curious about?"
-  }
-  
-  
+  },
+  {
+    keywords: ['vathsaran'],
+    response: "Ah, Vathsaran! It’s always a pleasure to assist the man behind the code. What can I do for you today?"
+  },
+  {
+    keywords: ['about vathsaran'],
+    response: "Vathsaran is a driven data analyst and graphic designer with a knack for turning complex data into compelling visual stories. Currently, he is enhancing his expertise in data analytics while exploring advanced tools and methodologies. Is there something specific you’d like to know about his projects, skills, or experiences?"
+  },
+  {
+    keywords: ['yaksharan'],
+    response: "Yaksharan, Vathsaran’s brother! How can I assist you with your questions or concerns involving him today?"
+  },
+  {
+    keywords: ['about_ramna'],
+    response: "While I keep some details private, I’m here to help with any general questions about Ramna. What are you curious about?"
+  },
+  {
+    keywords: ['portfolio', 'website'],
+    response: "You're currently exploring Vathsaran's portfolio website. It showcases his skills, projects, and professional background. Feel free to navigate through different sections or ask me about specific areas you're interested in!"
+  },
+  {
+    keywords: ['resume', 'cv'],
+    response: "While I can't provide Vathsaran's full resume here, you can find a comprehensive overview of his skills, experience, and projects throughout this website. For a more detailed CV, please use the contact form to request it directly."
+  },
+  {
+    keywords: ['hobbies', 'interests', 'free time'],
+    response: "When not working on data analysis or design projects, Vathsaran enjoys [insert hobbies or interests here]. These activities help him maintain a creative balance and often inspire his professional work."
+  },
+  {
+    keywords: ['location', 'based', 'where'],
+    response: "Vathsaran is based in [insert location], but he's open to remote work and collaborations worldwide. His digital skills allow him to work effectively across different time zones and cultures."
+  },
+  {
+    keywords: ['testimonials', 'reviews', 'feedback'],
+    response: "Vathsaran has received positive feedback from clients and colleagues alike. While I don't have specific testimonials to share, you can find examples of his work and the results he's achieved in the Projects section of this website."
+  },
+  {
+    keywords: ['price', 'cost', 'rates', 'fees'],
+    response: "Pricing for Vathsaran's services varies depending on the project scope and requirements. For a personalized quote, please reach out through the contact form with details about your project."
+  },
+  {
+    keywords: ['availability', 'schedule', 'timeline'],
+    response: "Vathsaran's availability can vary based on current projects. For the most up-to-date information on his schedule and potential start dates for new projects, please contact him directly through the provided contact methods."
+  },
+  {
+    keywords: ['team', 'collaboration', 'work with others'],
+    response: "While Vathsaran often works independently, he's also experienced in team collaborations and can adapt to various project structures. He values effective communication and seamless integration with existing teams or processes."
+  },
+  {
+    keywords: ['process', 'methodology', 'approach'],
+    response: "Vathsaran follows a structured approach in his work, typically involving stages like requirement gathering, data analysis, design conceptualization, implementation, and refinement. He emphasizes clear communication and regular updates throughout the project lifecycle."
+  },
+  {
+    keywords: ['awards', 'recognition', 'achievements'],
+    response: "While I don't have a specific list of awards, Vathsaran's work has been recognized in [mention any relevant recognitions, competitions, or notable projects]. His commitment to excellence is reflected in the quality of his portfolio projects."
+  },
+
+  // Fallback responses
+  {
+    keywords: ['unknown', 'not sure', 'confused'],
+    response: "I'm not quite sure I understand. Could you rephrase your question? I'm here to help with information about Vathsaran's skills, projects, education, or how to get in touch with him."
+  },
+  {
+    keywords: ['complex', 'detailed', 'specific'],
+    response: "That's quite a detailed question! While I can provide general information, for such specific inquiries, it might be best to contact Vathsaran directly. Would you like me to guide you to the contact section?"
+  },
+  {
+    keywords: ['other', 'different', 'change topic'],
+    response: "Certainly! I'd be happy to discuss a different topic. What else would you like to know about Vathsaran's work, skills, or background?"
+  },
   
 
-  
+
+
+
+ 
 ];
 
-chatbotToggle.addEventListener('click', () => {
-  chatbot.style.display = 'flex';
-  chatbotToggle.style.display = 'none';
-});
 
-closeChatbotBtn.addEventListener('click', () => {
-  chatbot.style.display = 'none';
-  chatbotToggle.style.display = 'flex';
-});
-
-function addMessage(message, isUser = false) {
-    const messageElement = document.createElement('div');
-    messageElement.textContent = message;
-    messageElement.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
-    chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function getBotResponse(message) {
-  const lowerMessage = message.toLowerCase();
+// Context to maintain state during a session
+let chatContext = {
+    lastTopic: null,
+    userGreeting: false
+  };
   
-  // Check for exact matches first
-  for (const item of knowledgeBase) {
-    if (item.keywords.some(keyword => lowerMessage.includes(keyword))) {
-      return item.response;
+  function updateContext(message, response) {
+    const lowerMessage = message.toLowerCase();
+    // Save the last topic based on certain keywords
+    knowledgeBase.forEach(item => {
+      if (item.keywords.some(keyword => lowerMessage.includes(keyword))) {
+        chatContext.lastTopic = item.response; // Store the last known topic's response for reference
+      }
+    });
+    // Detect greetings to adjust responses for returning users
+    if (['hello', 'hi', 'hey', 'greetings'].some(greet => lowerMessage.includes(greet))) {
+      chatContext.userGreeting = true;
+    } else {
+      chatContext.userGreeting = false;
     }
   }
   
-  // If no exact match, look for partial matches
-  for (const item of knowledgeBase) {
-    if (item.keywords.some(keyword => lowerMessage.includes(keyword.slice(0, 3)))) {
-      return item.response;
+  chatbotToggle.addEventListener('click', () => {
+    chatbot.style.display = 'flex';
+    chatbotToggle.style.display = 'none';
+    if (isMobile()) {
+      document.body.style.overflow = 'hidden'; // Prevent scrolling on mobile when chatbot is open
+    }
+  });
+  
+  closeChatbotBtn.addEventListener('click', () => {
+    chatbot.style.display = 'none';
+    chatbotToggle.style.display = 'flex';
+    if (isMobile()) {
+      document.body.style.overflow = ''; // Restore scrolling on mobile when chatbot is closed
+    }
+  });
+  
+  function addMessage(message, isUser = false) {
+      const messageElement = document.createElement('div');
+      messageElement.textContent = message;
+      messageElement.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
+      chatMessages.appendChild(messageElement);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  
+  // Function to handle responses not directly matched in the knowledge base
+function getFallbackResponse(message) {
+    if (message.length < 5) {
+      return "I need a bit more information to help you. Could you elaborate on your question?";
+    } else if (message.endsWith('?')) {
+      return "That's an interesting question! I might not have all the details, but I'd be happy to help you find the information on this website or guide you to contact Vathsaran directly.";
+    } else {
+      return "I'm not sure I fully understood that. Could you rephrase or ask about a specific aspect of Vathsaran's work, skills, or background?";
     }
   }
   
-  // If still no match, check for question words and common topics
-  const questionWords = ['what', 'how', 'where', 'when', 'why', 'who', 'can'];
-  const commonTopics = ['data', 'analytics', 'design', 'project', 'work'];
-  
-  if (questionWords.some(word => lowerMessage.includes(word)) || 
-      commonTopics.some(topic => lowerMessage.includes(topic))) {
-    return "It seems you're diving into some specifics. While I might not have all the details right here, you can explore Vathsaran’s skills, projects, and background on the dedicated pages of this website. If something eludes you, feel free to reach out directly through the contact form!";
-}
-
-    // Fallback response
-    return "Hmm, I might need a bit more clarity to assist effectively. Could you rephrase your question or specify a bit more? Feel free to inquire about Vathsaran’s skills, projects, educational background, or how to get in touch.";
-}
-
-sendMessageBtn.addEventListener('click', () => {
-  const message = userInput.value.trim();
-  if (message) {
-    addMessage(message, true);
-    userInput.value = '';
+  function getBotResponse(message) {
+    const lowerMessage = message.toLowerCase();
+    let response = "";
     
-    // Get and display bot response
-    setTimeout(() => {
-      const botResponse = getBotResponse(message);
-      addMessage(botResponse);
-    }, 500);
+    // Sort knowledgeBase items by the length of their keyword strings in descending order
+    const sortedKnowledgeBase = knowledgeBase.sort((a, b) => {
+      return b.keywords.join(' ').length - a.keywords.join(' ').length;
+    });
+    
+    // Check for exact matches first using sorted knowledge base
+    for (const item of sortedKnowledgeBase) {
+      if (item.keywords.some(keyword => lowerMessage.includes(keyword))) {
+        response = item.response;
+        break;
+      }
+    }
+    
+    // If no exact match, look for partial matches using the first few characters
+    if (!response) {
+      for (const item of sortedKnowledgeBase) {
+        if (item.keywords.some(keyword => lowerMessage.includes(keyword.slice(0, 3)))) {
+          response = item.response;
+          break;
+        }
+      }
+    }
+    
+    // Update the context before determining the final response
+    updateContext(lowerMessage, response);
+    
+    // If it's a greeting and the user has already greeted, provide a different response
+    if (chatContext.userGreeting && ['hello', 'hi', 'hey', 'greetings'].some(greet => lowerMessage.includes(greet))) {
+      return "Welcome back! Is there anything specific you'd like to know about Vathsaran's skills or projects?";
+    }
+    
+    // If no response was found and we have a last topic, use it
+    if (!response && chatContext.lastTopic) {
+      return `Regarding our previous topic about ${chatContext.lastTopic}, is there anything else you'd like to know?`;
+    }
+    
+    // If still no match, use the fallback response
+    if (!response) {
+      response = getFallbackResponse(lowerMessage);
+    }
+
+    // If it's a greeting and the user has already greeted, provide a different response
+  if (chatContext.userGreeting && ['hello', 'hi', 'hey', 'greetings'].some(greet => lowerMessage.includes(greet))) {
+    const followUpResponses = [
+      "Nice to see you again! What would you like to know about Vathsaran's skills or projects?",
+      "Welcome back! How else can I assist you today?",
+      "Hello again! Is there a specific area of Vathsaran's work you're curious about?",
+      "Great to have you back! What aspect of Vathsaran's portfolio would you like to explore?",
+      "Glad you're still here! What other information can I provide about Vathsaran?"
+    ];
+    return followUpResponses[Math.floor(Math.random() * followUpResponses.length)];
   }
-});
-
-userInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    sendMessageBtn.click();
+    
+    return response;
   }
-});
-
-const isMobile = () => window.innerWidth <= 768;
-
-chatbotToggle.addEventListener('click', () => {
-  chatbot.style.display = 'flex';
-  chatbotToggle.style.display = 'none';
+  
+  // Make sure this function is also updated
+  function updateContext(message, response) {
+    const lowerMessage = message.toLowerCase();
+    // Save the last topic based on certain keywords
+    knowledgeBase.forEach(item => {
+      if (item.keywords.some(keyword => lowerMessage.includes(keyword))) {
+        chatContext.lastTopic = item.keywords[0]; // Store the first keyword as the topic
+      }
+    });
+    // Detect greetings to adjust responses for returning users
+    if (['hello', 'hi', 'hey', 'greetings'].some(greet => lowerMessage.includes(greet))) {
+      chatContext.userGreeting = true;
+    }
+  }
+  
+  function getTimeBasedGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning! Jarvis at your service.";
+    else if (hour < 18) return "Good afternoon! Jarvis at your service.";
+    else return "Good evening! Jarvis at your service.";
+  }
+  
+  sendMessageBtn.addEventListener('click', () => {
+    const message = userInput.value.trim();
+    if (message) {
+      addMessage(message, true);
+      userInput.value = '';
+      
+      // Get and display bot response
+      setTimeout(() => {
+        const botResponse = getBotResponse(message);
+        addMessage(botResponse);
+      }, 500);
+    }
+  });
+  
+  userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      sendMessageBtn.click();
+    }
+  });
+  
+  const isMobile = () => window.innerWidth <= 768;
+  
+  // Adjust chatbot height on resize
+  window.addEventListener('resize', () => {
+    if (isMobile() && chatbot.style.display === 'flex') {
+      chatbot.style.height = `${window.innerHeight}px`;
+    } else {
+      chatbot.style.height = '400px'; // Default height for larger screens
+    }
+  });
+  
+  // Initialize chatbot height
   if (isMobile()) {
-    document.body.style.overflow = 'hidden'; // Prevent scrolling on mobile when chatbot is open
+    chatbot.style.height = `${window.innerHeight}px`;
   }
-});
-
-closeChatbotBtn.addEventListener('click', () => {
+  
+  // Initialize chatbot state
   chatbot.style.display = 'none';
   chatbotToggle.style.display = 'flex';
-  if (isMobile()) {
-    document.body.style.overflow = ''; // Restore scrolling on mobile when chatbot is closed
-  }
-});
-
-// Adjust chatbot height on resize
-window.addEventListener('resize', () => {
-  if (isMobile() && chatbot.style.display === 'flex') {
-    chatbot.style.height = `${window.innerHeight}px`;
-  } else {
-    chatbot.style.height = '400px'; // Default height for larger screens
-  }
-});
-
-// Initialize chatbot height
-if (isMobile()) {
-  chatbot.style.height = `${window.innerHeight}px`;
-}
-
-// Initialize chatbot state
-chatbot.style.display = 'none';
-chatbotToggle.style.display = 'flex';
-
-// Initial greeting message when the chatbot is opened
-chatbotToggle.addEventListener('click', () => {
+  
+  // Initial greeting message when the chatbot is opened
+  chatbotToggle.addEventListener('click', () => {
     if (chatMessages.children.length === 0) {
-      addMessage("Greetings! Jarvis at your service. How may I assist you on your quest for knowledge today?");
+      const timeBasedGreeting = getTimeBasedGreeting();
+      addMessage(`${timeBasedGreeting} How may I assist you on your quest for knowledge today?`);
     }
   });
   
