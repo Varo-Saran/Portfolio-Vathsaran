@@ -64,7 +64,7 @@ nav {
     font-size: 1.8rem;
     font-weight: bold;
     color: var(--primary-color);
-    text-shadow: 0 0 10px var(--primary-color);
+    text-shadow: 0 0 2px var(--primary-color);
 }
 
 .nav-links {
