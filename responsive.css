@@ -455,18 +455,71 @@
 
     .chatbot {
         width: 100%;
-        height: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        position: fixed;
         bottom: 0;
         left: 0;
+        margin: 0;
         border-radius: 0;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        animation: slideUp 0.3s ease-out;
+        z-index: 1000;
     }
 
+    .chat-header {
+        padding: 15px 20px;
+        background-color: rgba(0, 8, 20, 0.95);
+        border-bottom: 1px solid var(--primary-color);
+    }
+
+    .chat-title {
+        font-size: 1.1em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .chat-messages {
+        height: calc(100vh - 130px); /* Adjust for header and input heights */
+        padding: 15px 20px;
+    }
+
+    .chat-message {
+        max-width: 85%;
+        font-size: 1em;
+        padding: 12px 15px;
+    }
+
+    .chat-input {
+        padding: 15px 20px;
+        background-color: rgba(0, 8, 20, 0.95);
+        border-top: 1px solid var(--primary-color);
+    }
+
+    .chat-input input {
+        height: 40px;
+        font-size: 16px; /* Prevent zoom on iOS */
+        padding: 8px 15px;
+    }
+
+    .chat-input button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+
+    /* Chatbot Toggle Button for Mobile */
     .chatbot-toggle {
-        bottom: 20px;
-        left: 20px;
         width: 50px;
         height: 50px;
+        bottom: 20px;
+        left: 20px;
         font-size: 20px;
+        border-width: 2px;
+        z-index: 1001;
     }
 
     #scrollToTopBtn {
@@ -477,16 +530,29 @@
         font-size: 18px;
     }
 
-    .chat-header {
-        padding: 10px;
-    }
 
-    .chat-input input {
-        font-size: 16px; /* Prevent zoom on input focus on iOS */
+/* Animation for chatbot opening */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
     }
+    to {
+        transform: translateY(0);
+    }
+}
 
-    .chat-input button {
-        padding: 8px;
+/* Animation for chatbot closing */
+@keyframes slideDown {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}
+
+    .chatbot.closing {
+        animation: slideDown 0.3s ease-out forwards;
     }
 }
 
@@ -645,6 +711,31 @@
         right: 10px;
         bottom: 10px;
     }
+
+    .chat-message {
+        max-width: 90%;
+        font-size: 0.95em;
+    }
+
+    .chat-input {
+        padding: 12px 15px;
+    }
+
+    .chatbot-toggle {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+        bottom: 15px;
+        left: 15px;
+    }
+
+    .chat-header {
+        padding: 12px 15px;
+    }
+
+    .chat-title {
+        font-size: 1em;
+    }
 }
 
 /* Ensure form elements are easily tappable on touch devices */
@@ -731,6 +822,23 @@
 
     .hero-content {
         padding-top: 60px;
+    }
+    
+    .chatbot {
+        height: 100vh;
+    }
+
+    .chat-messages {
+        height: calc(100vh - 110px);
+    }
+
+    .chat-input {
+        padding: 10px 15px;
+    }
+
+    .chat-message {
+        padding: 8px 12px;
+        margin-bottom: 8px;
     }
 }
 
