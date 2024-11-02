@@ -467,12 +467,15 @@
         border-bottom: none;
         animation: slideUp 0.3s ease-out;
         z-index: 1000;
+        display: flex;
+        flex-direction: column;
     }
 
     .chat-header {
         padding: 15px 20px;
         background-color: rgba(0, 8, 20, 0.95);
         border-bottom: 1px solid var(--primary-color);
+        flex-shrink: 0; /* Prevent header from shrinking */
     }
 
     .chat-title {
@@ -483,8 +486,9 @@
     }
 
     .chat-messages {
-        height: calc(100vh - 130px); /* Adjust for header and input heights */
-        padding: 15px 20px;
+        flex: 1;
+        height: auto;
+        padding-bottom: 20px;
     }
 
     .chat-message {
@@ -494,9 +498,15 @@
     }
 
     .chat-input {
-        padding: 15px 20px;
+        flex-shrink: 0; /* Prevent input area from shrinking */
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
         background-color: rgba(0, 8, 20, 0.95);
         border-top: 1px solid var(--primary-color);
+        padding: 10px;
+        z-index: 1001;
     }
 
     .chat-input input {
@@ -520,6 +530,21 @@
         font-size: 20px;
         border-width: 2px;
         z-index: 1001;
+    }
+
+    /* Adjust the messages container when keyboard is visible */
+    @supports (-webkit-touch-callout: none) {
+        /* iOS specific styles */
+        .chat-messages {
+            padding-bottom: 50vh; /* Add extra padding for iOS keyboard */
+        }
+    }
+
+    /* Android specific adjustments */
+    @supports not (-webkit-touch-callout: none) {
+        .chat-messages {
+            padding-bottom: 30vh; /* Add extra padding for Android keyboard */
+        }
     }
 
     #scrollToTopBtn {
@@ -554,6 +579,8 @@
     .chatbot.closing {
         animation: slideDown 0.3s ease-out forwards;
     }
+
+
 }
 
 /* Phones */
@@ -804,8 +831,13 @@
         font-size: 16px;
     }
 
+    .chat-input {
+        padding: 8px;
+    }
+
     .chat-input input {
         width: calc(100% - 40px);
+        height: 36px;
     }
 
     .chat-input button {
@@ -823,7 +855,7 @@
     .hero-content {
         padding-top: 60px;
     }
-    
+
     .chatbot {
         height: 100vh;
     }
